@@ -5,6 +5,7 @@ using UnityEngine;
 public class Ficha : MonoBehaviour
 {
     public enum Color {Black, White};
+    public Color pieceColor;
     public Vector2 position; 
 
     // Start is called before the first frame update

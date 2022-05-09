@@ -19,4 +19,27 @@ public class Ficha : MonoBehaviour
     {
         
     }
+
+    public void setPosition(Vector2 pos){
+        position = pos;
+    }
+
+    private IEnumerator StartMovement(float time, GameObject desiredMove)
+    {
+        float elapsedtime = 0;
+        Vector3 pos_fin = desiredMove.transform.position;
+
+        while(elapsedtime < time)
+        {
+            transform.position = Vector3.Lerp(transform.position, pos_fin, (elapsedtime / time));
+            elapsedtime += Time.deltaTime;
+            yield return null;
+        }
+    }
+
+    public void move(GameObject desiredMove){
+        desiredMove.GetComponent<Square>().newPiece(this.gameObject);
+        setPosition(desiredMove.GetComponent<Square>().matrixPosition);
+        StartCoroutine(StartMovement(1f, desiredMove));
+    }
 }

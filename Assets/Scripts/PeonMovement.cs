@@ -6,7 +6,7 @@ using System;
 public class PeonMovement : Ficha
 {
     private bool firstMove;
-    public GameObject desiredMove;
+    private GameObject desiredMove;
     GameObject promotion;
 
     // Start is called before the first frame update

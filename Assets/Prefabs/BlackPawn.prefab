@@ -11,11 +11,10 @@ GameObject:
   - component: {fileID: 8615021327668555278}
   - component: {fileID: 4621097655795589547}
   - component: {fileID: 7477550554181719393}
-  - component: {fileID: 8889744177400270264}
   - component: {fileID: -560780297583720244}
   m_Layer: 0
   m_Name: BlackPawn
-  m_TagString: Untagged
+  m_TagString: Black
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -83,20 +82,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &8889744177400270264
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8990703197142742196}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 303faf1748ef0fd4fa4d1bd6231286ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pieceColor: 0
-  position: {x: 0, y: 0}
 --- !u!114 &-560780297583720244
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -109,3 +94,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b709fa374e5da4f458142184e47e983b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  position: {x: 0, y: 0}
+  currentSquare: {fileID: 0}

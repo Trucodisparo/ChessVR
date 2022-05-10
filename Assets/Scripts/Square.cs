@@ -16,6 +16,7 @@ public class Square : MonoBehaviour
         if(ogPiece != null){
             piece = Instantiate(ogPiece,transform.position,ogPiece.transform.rotation);
             piece.GetComponent<Ficha>().setPosition(matrixPosition);
+            piece.GetComponent<Ficha>().currentSquare = this.gameObject;
         }
     }
 
@@ -33,12 +34,22 @@ public class Square : MonoBehaviour
     }
 
     public bool hasEnemy(GameObject proposedPiece){
-        if (hasPiece() && piece.GetComponent<Ficha>().pieceColor != proposedPiece.GetComponent<Ficha>().pieceColor) return true;
+        if (hasPiece() && piece.tag != proposedPiece.tag) return true;
+        else return false;
+    }
+
+    public bool hasAlly(GameObject proposedPiece){
+        if (hasPiece() && piece.tag == proposedPiece.tag) return true;
         else return false;
     }
 
     public void newPiece(GameObject proposedPiece){
         if(piece != null) Destroy(piece);
         piece = proposedPiece;
+        piece.GetComponent<Ficha>().currentSquare = this.gameObject;
+    }
+
+    public void pieceMoved(){
+        piece = null;
     }
 }

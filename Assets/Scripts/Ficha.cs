@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class Ficha : MonoBehaviour
 {
-    public enum Color {Black, White};
-    public Color pieceColor;
     public Vector2 position; 
+
+    public GameObject currentSquare;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -38,8 +38,14 @@ public class Ficha : MonoBehaviour
     }
 
     public void move(GameObject desiredMove){
+        currentSquare.GetComponent<Square>().pieceMoved();
         desiredMove.GetComponent<Square>().newPiece(this.gameObject);
         setPosition(desiredMove.GetComponent<Square>().matrixPosition);
+        currentSquare = desiredMove;
         StartCoroutine(StartMovement(1f, desiredMove));
+    }
+
+    protected Vector2 Abs(Vector2 vector){
+        return new Vector2(Mathf.Abs(vector.x), Mathf.Abs(vector.y));
     }
 }

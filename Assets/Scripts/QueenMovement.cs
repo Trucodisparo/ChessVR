@@ -3,17 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class QueenMovement : MonoBehaviour
+public class QueenMovement : Ficha
 {
     private GameObject desiredMove;
-    private Ficha ficha;
 
     private enum Direction{N,E,S,W,NE,SE,NW,SW, NOT_VALID}; //Dirección del movimiento
 
     // Start is called before the first frame update
     void Start()
     {
-        ficha = this.GetComponent<Ficha>();
     }
 
     // Update is called once per frame
@@ -45,10 +43,10 @@ public class QueenMovement : MonoBehaviour
     void commandIssued(string square){
         desiredMove = getSquare(square);
         if(isLegalMove()){
-            ficha.move(desiredMove);
+            move(desiredMove);
         }
         else{
-            Debug.Log("Illegal move: " + desiredMove.GetComponent<Square>().matrixPosition + " // " + ficha.position);
+            Debug.Log("Illegal move: " + desiredMove.GetComponent<Square>().matrixPosition + " // " + position);
         }
     }
 
@@ -61,14 +59,11 @@ public class QueenMovement : MonoBehaviour
 
         if(getDirection(destination) == Direction.NOT_VALID) return false;
 
-        if( !pathBlocked(destination))
-            return true;
+        if(!desiredMove.GetComponent<Square>().hasAlly(this.gameObject))
+            if(!pathBlocked(destination))
+                return true;
 
         return false;
-    }
-
-    private Vector2 Abs(Vector2 vector){
-        return new Vector2(Mathf.Abs(vector.x), Mathf.Abs(vector.y));
     }
 
     private bool pathBlocked(Vector2 destination){
@@ -78,53 +73,53 @@ public class QueenMovement : MonoBehaviour
 
         switch(direction){
             case Direction.N:
-                for(int i=(int)ficha.position.y+1;i<destination.y; i++){
-                    square = getSquare(board.GetComponent<Board>().squares[i-1].name[(int)ficha.position.x-1]); // position [x,y] = array [x-1,y-1]
+                for(int i=(int)position.y+1;i<destination.y; i++){
+                    square = getSquare(board.GetComponent<Board>().squares[i-1].name[(int)position.x-1]); // position [x,y] = array [x-1,y-1]
                     if(square.GetComponent<Square>().hasPiece()) return true;
                 }
                 break;
             case Direction.S:
-                for(int i=(int)ficha.position.y-1;i>destination.y; i--){
-                    square = getSquare(board.GetComponent<Board>().squares[i-1].name[(int)ficha.position.x-1]); // position [x,y] = array [x-1,y-1]
+                for(int i=(int)position.y-1;i>destination.y; i--){
+                    square = getSquare(board.GetComponent<Board>().squares[i-1].name[(int)position.x-1]); // position [x,y] = array [x-1,y-1]
                     if(square.GetComponent<Square>().hasPiece()) return true;
                 }
                 break;
             case Direction.E:
-                for(int j=(int)ficha.position.x+1;j<destination.x; j++){
-                    square = getSquare(board.GetComponent<Board>().squares[(int)ficha.position.y-1].name[j-1]); // position [x,y] = array [x-1,y-1]
+                for(int j=(int)position.x+1;j<destination.x; j++){
+                    square = getSquare(board.GetComponent<Board>().squares[(int)position.y-1].name[j-1]); // position [x,y] = array [x-1,y-1]
                     if(square.GetComponent<Square>().hasPiece()) return true;
                 }
                 break;
             case Direction.W:
-                for(int j=(int)ficha.position.x-1;j>destination.x; j--){
-                    square = getSquare(board.GetComponent<Board>().squares[(int)ficha.position.y-1].name[j-1]); // position [x,y] = array [x-1,y-1]
+                for(int j=(int)position.x-1;j>destination.x; j--){
+                    square = getSquare(board.GetComponent<Board>().squares[(int)position.y-1].name[j-1]); // position [x,y] = array [x-1,y-1]
                     if(square.GetComponent<Square>().hasPiece()) return true;
                 }
                 break;
             case Direction.NE:
-                for(int i=(int)ficha.position.y+1;i<destination.y; i++)
-                    for(int j=(int)ficha.position.x+1;j<destination.x; j++){
+                for(int i=(int)position.y+1;i<destination.y; i++)
+                    for(int j=(int)position.x+1;j<destination.x; j++){
                         square = getSquare(board.GetComponent<Board>().squares[i-1].name[j-1]); // position [x,y] = array [x-1,y-1]
                         if(square.GetComponent<Square>().hasPiece()) return true;
                 }
                 break;
             case Direction.SE:
-                for(int i=(int)ficha.position.y-1;i>destination.y; i--)
-                    for(int j=(int)ficha.position.x+1;j<destination.x; j++){
+                for(int i=(int)position.y-1;i>destination.y; i--)
+                    for(int j=(int)position.x+1;j<destination.x; j++){
                         square = getSquare(board.GetComponent<Board>().squares[i-1].name[j-1]); // position [x,y] = array [x-1,y-1]
                         if(square.GetComponent<Square>().hasPiece()) return true;
                 }
                 break;
             case Direction.NW:
-                for(int i=(int)ficha.position.y+1;i<destination.y; i++)
-                    for(int j=(int)ficha.position.x-1;j<destination.x; j--){
+                for(int i=(int)position.y+1;i<destination.y; i++)
+                    for(int j=(int)position.x-1;j<destination.x; j--){
                         square = getSquare(board.GetComponent<Board>().squares[i-1].name[j-1]); // position [x,y] = array [x-1,y-1]
                         if(square.GetComponent<Square>().hasPiece()) return true;
                 }
                 break;
             case Direction.SW:
-                for(int i=(int)ficha.position.y-1;i>destination.y; i--)
-                    for(int j=(int)ficha.position.x-1;j<destination.x; j--){
+                for(int i=(int)position.y-1;i>destination.y; i--)
+                    for(int j=(int)position.x-1;j<destination.x; j--){
                         square = getSquare(board.GetComponent<Board>().squares[i-1].name[j-1]); // position [x,y] = array [x-1,y-1]
                         if(square.GetComponent<Square>().hasPiece()) return true;
                 }
@@ -137,8 +132,8 @@ public class QueenMovement : MonoBehaviour
     private Direction getDirection(Vector2 destination){
         Direction direction;
         float x_dist, y_dist;
-        x_dist = destination.x - ficha.position.x;
-        y_dist = destination.y - ficha.position.y;
+        x_dist = destination.x - position.x;
+        y_dist = destination.y - position.y;
 
         if(x_dist == 0 && y_dist > 0) direction = Direction.N;
         else if(x_dist == 0 && y_dist < 0) direction = Direction.S;

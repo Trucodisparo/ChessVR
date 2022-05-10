@@ -5,8 +5,6 @@ using System;
 
 public class KingMovement : Ficha
 {
-    private GameObject desiredMove;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -16,41 +14,7 @@ public class KingMovement : Ficha
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown("a"))
-        {
-            Debug.Log("a");
-            string square = "B4";
-            commandIssued(square);
-        }
-
-        if(Input.GetKeyDown("s"))
-        {
-            Debug.Log("s");
-            string square = "C3";
-            commandIssued(square);
-        }
-
-        if(Input.GetKeyDown("d"))
-        {
-            Debug.Log("d");
-            string square = "C4";
-            commandIssued(square);
-        }
-            
-    }
-
-    void commandIssued(string square){
-        desiredMove = getSquare(square);
-        if(isLegalMove()){
-            move(desiredMove);
-        }
-        else{
-            Debug.Log("Illegal move: " + desiredMove.GetComponent<Square>().matrixPosition + " // " + position);
-        }
-    }
-
-    private GameObject getSquare(string square){
-        return GameObject.Find(square);
+      
     }
 
     public override bool isLegalMove(GameObject square = null, bool hasEnemy = false){
@@ -78,7 +42,7 @@ public class KingMovement : Ficha
         return false;
     }
 
-    private bool CheckMate(){
+    public bool CheckMate(){
         GameObject board = GameObject.Find("Tablero");
         if(isDangerous(getSquare(board.GetComponent<Board>().squares[(int)position.y].name[(int)position.x-1])) //North
             && isDangerous(getSquare(board.GetComponent<Board>().squares[(int)position.y-2].name[(int)position.x-1])) //South

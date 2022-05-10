@@ -6,7 +6,6 @@ using System;
 public class PeonMovement : Ficha
 {
     private bool firstMove;
-    private GameObject desiredMove;
     GameObject promotion;
 
     // Start is called before the first frame update
@@ -18,44 +17,19 @@ public class PeonMovement : Ficha
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown("z"))
-        {
-            Debug.Log("z");
-            string square = "C2";
-            desiredMove = getSquare(square);
-            if(desiredMove != null){
-                if(isLegalMove()){
-                    if(firstMove) firstMove = false;
-                    move(desiredMove);
-                        if(gameObject.tag == "Black" && position.y == 1) promote();
-                        else if(gameObject.tag == "White" && position.y == 8) promote();
-                }
-                else{
-                    Debug.Log("Illegal move: " + desiredMove.GetComponent<Square>().matrixPosition + " // " + position);
-                }
-            }
-        }
-        if(Input.GetKeyDown("x"))
-        {
-            Debug.Log("x");
-            string square = "C3";
-            desiredMove = getSquare(square);
-            if(desiredMove != null){
-                if(isLegalMove()){
-                    if(firstMove) firstMove = false;
-                    move(desiredMove);
-                        if(gameObject.tag == "Black" && position.y == 1) promote();
-                        else if(gameObject.tag == "White" && position.y == 8) promote();
-                }
-                else{
-                    Debug.Log("Illegal move: " + desiredMove.GetComponent<Square>().matrixPosition + " // " + position);
-                }
-            }
-        }
+        
     }
 
-    private GameObject getSquare(string square){
-        return GameObject.Find(square);
+    public override void commandIssued(string square){
+        desiredMove = getSquare(square);
+        if(isLegalMove()){
+            move(desiredMove);
+            if(gameObject.tag == "Black" && position.y == 1) promote();
+            else if(gameObject.tag == "White" && position.y == 8) promote();
+        }
+        else{
+            Debug.Log("Illegal move: " + desiredMove.GetComponent<Square>().matrixPosition + " // " + position);
+        }
     }
 
     public override bool isLegalMove(GameObject square = null, bool hasEnemy = false){

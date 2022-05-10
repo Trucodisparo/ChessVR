@@ -5,8 +5,6 @@ using System;
 
 public class RookMovement : Ficha
 {
-    private GameObject desiredMove;
-
     private enum Direction{NE,SE,NW,SW, NOT_VALID}; //Dirección del movimiento
 
     // Start is called before the first frame update
@@ -38,20 +36,6 @@ public class RookMovement : Ficha
             commandIssued(square);
         }
             
-    }
-
-    void commandIssued(string square){
-        desiredMove = getSquare(square);
-        if(isLegalMove()){
-            move(desiredMove);
-        }
-        else{
-            Debug.Log("Illegal move: " + desiredMove.GetComponent<Square>().matrixPosition + " // " + position);
-        }
-    }
-
-    private GameObject getSquare(string square){
-        return GameObject.Find(square);
     }
 
     public override bool isLegalMove(GameObject square = null, bool hasEnemy = false){

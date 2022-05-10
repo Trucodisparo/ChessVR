@@ -8,6 +8,9 @@ public abstract class Ficha : MonoBehaviour
 
     public GameObject currentSquare;
 
+    public GameObject desiredMove;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +25,10 @@ public abstract class Ficha : MonoBehaviour
 
     public void setPosition(Vector2 pos){
         position = pos;
+    }
+
+    protected GameObject getSquare(string square){
+        return GameObject.Find(square);
     }
 
     private IEnumerator StartMovement(float time, GameObject desiredMove)
@@ -49,5 +56,15 @@ public abstract class Ficha : MonoBehaviour
         return new Vector2(Mathf.Abs(vector.x), Mathf.Abs(vector.y));
     }
 
-    abstract public bool isLegalMove(GameObject square = null, bool hasEnemy = false);
+    public virtual void commandIssued(string square){
+        desiredMove = getSquare(square);
+        if(isLegalMove()){
+            move(desiredMove);
+        }
+        else{
+            Debug.Log("Illegal move: " + desiredMove.GetComponent<Square>().matrixPosition + " // " + position);
+        }
+    }
+
+    public abstract bool isLegalMove(GameObject square = null, bool hasEnemy = false);
 }

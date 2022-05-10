@@ -5,8 +5,6 @@ using System;
 
 public class TowerMovement : Ficha
 {
-    private GameObject desiredMove;
-
     private enum Direction{N,E,S,W, NOT_VALID}; //Dirección del movimiento
 
     // Start is called before the first frame update
@@ -17,41 +15,7 @@ public class TowerMovement : Ficha
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown("z"))
-        {
-            Debug.Log("z");
-            string square = "B4";
-            commandIssued(square);
-        }
-
-        if(Input.GetKeyDown("x"))
-        {
-            Debug.Log("x");
-            string square = "B7";
-            commandIssued(square);
-        }
-
-        if(Input.GetKeyDown("c"))
-        {
-            Debug.Log("c");
-            string square = "H5";
-            commandIssued(square);
-        }
-            
-    }
-
-    void commandIssued(string square){
-        desiredMove = getSquare(square);
-        if(isLegalMove()){
-            move(desiredMove);
-        }
-        else{
-            Debug.Log("Illegal move: " + desiredMove.GetComponent<Square>().matrixPosition + " // " + position);
-        }
-    }
-
-    private GameObject getSquare(string square){
-        return GameObject.Find(square);
+    
     }
 
     public override bool isLegalMove(GameObject square = null, bool hasEnemy = false){

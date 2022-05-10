@@ -16,23 +16,23 @@ public class KingMovement : Ficha
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown("z"))
+        if(Input.GetKeyDown("a"))
         {
-            Debug.Log("z");
+            Debug.Log("a");
             string square = "B4";
             commandIssued(square);
         }
 
-        if(Input.GetKeyDown("x"))
+        if(Input.GetKeyDown("s"))
         {
-            Debug.Log("x");
+            Debug.Log("s");
             string square = "C3";
             commandIssued(square);
         }
 
-        if(Input.GetKeyDown("c"))
+        if(Input.GetKeyDown("d"))
         {
-            Debug.Log("c");
+            Debug.Log("d");
             string square = "C4";
             commandIssued(square);
         }
@@ -53,17 +53,39 @@ public class KingMovement : Ficha
         return GameObject.Find(square);
     }
 
-    private bool isLegalMove(){
-        Vector2 destination = desiredMove.GetComponent<Square>().matrixPosition;
+    public override bool isLegalMove(GameObject square = null, bool hasEnemy = false){
+        if(square == null) square = desiredMove;
+        Vector2 destination = square.GetComponent<Square>().matrixPosition;
         
-        if(!desiredMove.GetComponent<Square>().hasAlly(this.gameObject))
-            if((Abs(destination - position) == new Vector2(1,0)) || (Abs(destination - position) == new Vector2(0,1))) return true;
+        if(!square.GetComponent<Square>().hasAlly(this.gameObject))
+            if((Abs(destination - position) == new Vector2(1,0)) || (Abs(destination - position) == new Vector2(0,1))) 
+                if(!isDangerous()) return true;
 
         return false;
     }
 
+    private bool isDangerous(GameObject square = null){
+        if(square == null) square = desiredMove;
+        GameObject[] enemies;
+        if(gameObject.tag == "White") enemies = GameObject.FindGameObjectsWithTag("Black");
+        else enemies = GameObject.FindGameObjectsWithTag("White");
+        foreach(GameObject enemy in enemies){
+            if(enemy.GetComponent<Ficha>().isLegalMove(square, true)){
+                Debug.Log("King would be in danger!");
+                return true;
+            }
+        }
+        return false;
+    }
+
     private bool CheckMate(){
-        return true;
+        GameObject board = GameObject.Find("Tablero");
+        if(isDangerous(getSquare(board.GetComponent<Board>().squares[(int)position.y].name[(int)position.x-1])) //North
+            && isDangerous(getSquare(board.GetComponent<Board>().squares[(int)position.y-2].name[(int)position.x-1])) //South
+            && isDangerous(getSquare(board.GetComponent<Board>().squares[(int)position.y-1].name[(int)position.x])) //East
+            && isDangerous(getSquare(board.GetComponent<Board>().squares[(int)position.y-1].name[(int)position.x-2]))) //West
+            return true;
+        else return false;
     }
 
 }

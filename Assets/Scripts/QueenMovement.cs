@@ -54,12 +54,13 @@ public class QueenMovement : Ficha
         return GameObject.Find(square);
     }
 
-    private bool isLegalMove(){
-        Vector2 destination = desiredMove.GetComponent<Square>().matrixPosition;
+    public override bool isLegalMove(GameObject square = null, bool hasEnemy = false){
+        if(square == null) square = desiredMove;
+        Vector2 destination = square.GetComponent<Square>().matrixPosition;
 
         if(getDirection(destination) == Direction.NOT_VALID) return false;
 
-        if(!desiredMove.GetComponent<Square>().hasAlly(this.gameObject))
+        if(!square.GetComponent<Square>().hasAlly(this.gameObject))
             if(!pathBlocked(destination))
                 return true;
 

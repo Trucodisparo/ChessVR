@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PeonMovement : Ficha
 {
     private bool firstMove;
-    private GameObject desiredMove;
+    public GameObject desiredMove;
     GameObject promotion;
 
     // Start is called before the first frame update
@@ -24,6 +25,24 @@ public class PeonMovement : Ficha
             desiredMove = getSquare(square);
             if(desiredMove != null){
                 if(isLegalMove()){
+                    if(firstMove) firstMove = false;
+                    move(desiredMove);
+                        if(gameObject.tag == "Black" && position.y == 1) promote();
+                        else if(gameObject.tag == "White" && position.y == 8) promote();
+                }
+                else{
+                    Debug.Log("Illegal move: " + desiredMove.GetComponent<Square>().matrixPosition + " // " + position);
+                }
+            }
+        }
+        if(Input.GetKeyDown("x"))
+        {
+            Debug.Log("x");
+            string square = "C3";
+            desiredMove = getSquare(square);
+            if(desiredMove != null){
+                if(isLegalMove()){
+                    if(firstMove) firstMove = false;
                     move(desiredMove);
                         if(gameObject.tag == "Black" && position.y == 1) promote();
                         else if(gameObject.tag == "White" && position.y == 8) promote();
@@ -39,14 +58,33 @@ public class PeonMovement : Ficha
         return GameObject.Find(square);
     }
 
-    private bool isLegalMove(){
-        Vector2 destination = desiredMove.GetComponent<Square>().matrixPosition;
-        if((Abs(destination - position) == new Vector2(1,1)) && (desiredMove.GetComponent<Square>().hasEnemy(this.gameObject))) return true;
+    public override bool isLegalMove(GameObject square = null, bool hasEnemy = false){
+        if(square == null) square = desiredMove;
+
+        Vector2 firstMoveOK, moveOK, diagonalMoveOK;
+        if(gameObject.tag == "Black"){
+            firstMoveOK = new Vector2(0,-2);
+            moveOK = new Vector2(0,-1);
+            diagonalMoveOK = new Vector2(1,-1);
+        }
+        else{
+            firstMoveOK = new Vector2(0,2);
+            moveOK = new Vector2(0,1);
+            diagonalMoveOK = new Vector2(1,1);
+        }
+
+        Vector2 destination = square.GetComponent<Square>().matrixPosition;
+        Vector2 distance = destination - position;
+        distance.x = Math.Abs(distance.x);
+
+        if(hasEnemy == false) hasEnemy = (square.GetComponent<Square>().hasEnemy(this.gameObject));
+
+        if((distance == diagonalMoveOK && hasEnemy)) return true;
         if(!pathBlocked(destination)){
-        if(firstMove)
-            if((Abs(destination - position) == new Vector2(0,2)) || Abs(destination - position) == new Vector2(0,1)) return true;
-        else
-            if(Abs(destination - position) == new Vector2(0,1)) return true;
+            if(firstMove)
+                if((distance == firstMoveOK) || distance == moveOK) return true;
+            else
+                if(distance == moveOK) return true;
         }
         return false;
     }

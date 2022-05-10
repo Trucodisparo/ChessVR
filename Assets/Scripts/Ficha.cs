@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ficha : MonoBehaviour
+public abstract class Ficha : MonoBehaviour
 {
     public Vector2 position; 
 
@@ -48,4 +48,6 @@ public class Ficha : MonoBehaviour
     protected Vector2 Abs(Vector2 vector){
         return new Vector2(Mathf.Abs(vector.x), Mathf.Abs(vector.y));
     }
+
+    abstract public bool isLegalMove(GameObject square = null, bool hasEnemy = false);
 }

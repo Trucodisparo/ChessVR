@@ -31,7 +31,7 @@ public abstract class Ficha : MonoBehaviour
         return GameObject.Find(square);
     }
 
-    private IEnumerator StartMovement(float time, GameObject desiredMove)
+    protected IEnumerator StartMovement(float time, GameObject desiredMove)
     {
         float elapsedtime = 0;
         Vector3 pos_fin = desiredMove.transform.position;
@@ -44,7 +44,7 @@ public abstract class Ficha : MonoBehaviour
         }
     }
 
-    public void move(GameObject desiredMove){
+    public virtual void move(GameObject desiredMove){
         currentSquare.GetComponent<Square>().pieceMoved();
         desiredMove.GetComponent<Square>().newPiece(this.gameObject);
         setPosition(desiredMove.GetComponent<Square>().matrixPosition);

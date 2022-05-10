@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.5993736, g: 0.5997497, b: 0.59948695, a: 1}
+  m_IndirectSpecularColor: {r: 0.59937465, g: 0.5997507, b: 0.59948814, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -213,7 +213,7 @@ GameObject:
   - component: {fileID: 90652812}
   - component: {fileID: 90652813}
   m_Layer: 0
-  m_Name: D1
+  m_Name: X1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -528,6 +528,50 @@ MonoBehaviour:
   ogPiece: {fileID: 1012159655278075379, guid: ccc2ece71ccb34e59b5ed41b46c81c78, type: 3}
   piece: {fileID: 0}
   matrixPosition: {x: 6, y: 2}
+--- !u!1 &243695338
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 243695340}
+  - component: {fileID: 243695339}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &243695339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 243695338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22222e3560eb9ee4f8f38636543fe866, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Keywords: []
+--- !u!4 &243695340
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 243695338}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 10.0474415, y: 3.6424408, z: 9.872007}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &278625443
 GameObject:
   m_ObjectHideFlags: 0
@@ -751,7 +795,7 @@ GameObject:
   - component: {fileID: 414532721}
   - component: {fileID: 414532722}
   m_Layer: 0
-  m_Name: D4
+  m_Name: X4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -797,7 +841,7 @@ GameObject:
   - component: {fileID: 440161094}
   - component: {fileID: 440161095}
   m_Layer: 0
-  m_Name: D5
+  m_Name: X5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -935,7 +979,7 @@ GameObject:
   - component: {fileID: 490826145}
   - component: {fileID: 490826146}
   m_Layer: 0
-  m_Name: D3
+  m_Name: X3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1588,7 +1632,7 @@ GameObject:
   - component: {fileID: 773866421}
   - component: {fileID: 773866422}
   m_Layer: 0
-  m_Name: D7
+  m_Name: X7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2112,7 +2156,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!81 &969086688
 AudioListener:
   m_ObjectHideFlags: 0
@@ -2386,7 +2430,7 @@ GameObject:
   - component: {fileID: 1134221824}
   - component: {fileID: 1134221825}
   m_Layer: 0
-  m_Name: D8
+  m_Name: X8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2432,7 +2476,7 @@ GameObject:
   - component: {fileID: 1222121807}
   - component: {fileID: 1222121808}
   m_Layer: 0
-  m_Name: D6
+  m_Name: X6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3123,7 +3167,7 @@ GameObject:
   - component: {fileID: 1635622508}
   - component: {fileID: 1635622509}
   m_Layer: 0
-  m_Name: D2
+  m_Name: X2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4348,7 +4392,7 @@ PrefabInstance:
     - target: {fileID: 407969845556573483, guid: f4b4ac31fc77b4df88b772b7157d5718,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 407969845557061899, guid: f4b4ac31fc77b4df88b772b7157d5718,
         type: 3}
@@ -4548,14 +4592,14 @@ MonoBehaviour:
     - C7
     - C8
   - name:
-    - D1
-    - D2
-    - D3
-    - D4
-    - D5
-    - D6
-    - D7
-    - D8
+    - X1
+    - X2
+    - X3
+    - X4
+    - X5
+    - X6
+    - X7
+    - X8
   - name:
     - E1
     - E2

@@ -14,11 +14,11 @@ public class Manager : MonoBehaviour
     private string[] squares;
     private int squaresRecognized;
 
-    private KeywordRecognizer m_Recognizer;
+    public KeywordRecognizer m_Recognizer;
     // Start is called before the first frame update
     void Start()
     {
-        m_Keywords = new string[64];
+        m_Keywords = new string[65];
         GameObject board = GameObject.Find("Tablero");
         int k = 0;
         for(int i = 0; i<8; i++){
@@ -27,6 +27,7 @@ public class Manager : MonoBehaviour
                 k++;
             }
         }
+        m_Keywords[64] = "Cancelar";
 
         m_Recognizer = new KeywordRecognizer(m_Keywords);
         m_Recognizer.OnPhraseRecognized += OnPhraseRecognized;
@@ -51,12 +52,15 @@ public class Manager : MonoBehaviour
         builder.AppendFormat("\tDuration: {0} seconds{1}", args.phraseDuration.TotalSeconds, Environment.NewLine);
         Debug.Log(builder.ToString());
 
-        squares[squaresRecognized] = args.text;
-        squaresRecognized++;
-        Debug.Log(squaresRecognized + " // " + squares[squaresRecognized-1]);
-        if(squaresRecognized == 2){
-            squaresRecognized = 0;
-            makeCommand();
+        if(args.text == "Cancelar") squaresRecognized = 0;
+        else{
+            squares[squaresRecognized] = args.text;
+            squaresRecognized++;
+            Debug.Log(squaresRecognized + " // " + squares[squaresRecognized-1]);
+            if(squaresRecognized == 2){
+                squaresRecognized = 0;
+                makeCommand();
+            }
         }
     }
 

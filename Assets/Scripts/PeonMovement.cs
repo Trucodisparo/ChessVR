@@ -54,6 +54,7 @@ public class PeonMovement : Ficha
         if(hasEnemy == false) hasEnemy = (square.GetComponent<Square>().hasEnemy(this.gameObject));
 
         if((distance == diagonalMoveOK && hasEnemy)) return true;
+        Debug.Log("Path blocked: " + pathBlocked(destination));
         if(!pathBlocked(destination)){
             if(firstMove)
                 if((distance == firstMoveOK) || distance == moveOK) return true;
@@ -73,9 +74,10 @@ public class PeonMovement : Ficha
     private bool pathBlocked(Vector2 destination){
         GameObject board = GameObject.Find("Tablero");
         GameObject square;
+        Debug.Log(destination);
         if(gameObject.tag == "White")
             for(int i=(int)position.y+1;i<=destination.y; i++){
-                square = getSquare(board.GetComponent<Board>().squares[i-1].name[(int)position.x-1]); // position [x,y] = array [x-1,y-1]
+                square = getSquare(board.GetComponent<Board>().squares[(int)position.x-1].name[i-1]); // position [x,y] = array [x-1,y-1]
                 if(square.GetComponent<Square>().hasPiece()) return true;
             }
         else if(gameObject.tag == "Black")

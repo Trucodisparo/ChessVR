@@ -54,6 +54,7 @@ public abstract class Ficha : MonoBehaviour
     }
 
     public virtual bool commandIssued(string square){
+        GameObject desiredMove = getSquare(square);
         if(isLegalMove(getSquare(square))){
             move(desiredMove);
             return true;

@@ -32,10 +32,6 @@ public class Manager : MonoBehaviour
         m_Recognizer = new KeywordRecognizer(m_Keywords);
         m_Recognizer.OnPhraseRecognized += OnPhraseRecognized;
         m_Recognizer.Start();
-
-        squaresRecognized = 0;
-
-        squares = new string[2];
         
         turn = "White";
     }
@@ -74,7 +70,7 @@ public class Manager : MonoBehaviour
 
     private void makeCommand(string square){
         if(pieceToMove.tag == turn){
-            if(pieceToMove.commandIssued(square)) commandSuccessful();
+            if(pieceToMove.GetComponent<Ficha>().commandIssued(square)) commandSuccessful();
         }
         else{
             Debug.Log("Not your piece!");

@@ -21,13 +21,16 @@ public class PeonMovement : Ficha
     }
 
     public override bool commandIssued(string square){
-        if(isLegalMove(getSquare(square))){
+        GameObject desiredMove = getSquare(square);
+        if(isLegalMove(desiredMove)){
             move(desiredMove);
             if(gameObject.tag == "Black" && position.y == 1) promote();
             else if(gameObject.tag == "White" && position.y == 8) promote();
+            return true;
         }
         else{
             Debug.Log("Illegal move: " + desiredMove.GetComponent<Square>().matrixPosition + " // " + position);
+            return false;
         }
     }
 

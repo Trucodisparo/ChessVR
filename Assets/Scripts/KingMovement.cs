@@ -22,13 +22,12 @@ public class KingMovement : Ficha
         
         if(!square.GetComponent<Square>().hasAlly(this.gameObject))
             if((Abs(destination - position) == new Vector2(1,0)) || (Abs(destination - position) == new Vector2(0,1))) 
-                if(!isDangerous()) return true;
+                if(!isDangerous(square)) return true;
 
         return false;
     }
 
-    private bool isDangerous(GameObject square = null){
-        if(square == null) square = desiredMove;
+    private bool isDangerous(GameObject square){
         GameObject[] enemies;
         if(gameObject.tag == "White") enemies = GameObject.FindGameObjectsWithTag("Black");
         else enemies = GameObject.FindGameObjectsWithTag("White");

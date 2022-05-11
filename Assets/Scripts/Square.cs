@@ -17,6 +17,7 @@ public class Square : MonoBehaviour
             piece = Instantiate(ogPiece,transform.position,ogPiece.transform.rotation);
             piece.GetComponent<Ficha>().setPosition(matrixPosition);
             piece.GetComponent<Ficha>().currentSquare = this.gameObject;
+            piece.name = ogPiece.name;
         }
     }
 

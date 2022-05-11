@@ -56,21 +56,12 @@ public class Manager : MonoBehaviour
             else{
                 makeCommand(args.text);
             }
-
-            /*
-            squares[squaresRecognized] = args.text;
-            squaresRecognized++;
-            Debug.Log(squaresRecognized + " // " + squares[squaresRecognized-1]);
-            if(squaresRecognized == 2){
-                squaresRecognized = 0;
-                makeCommand();
-            }*/
         }
     }
 
     private void makeCommand(string square){
         if(pieceToMove.tag == turn){
-            if(pieceToMove.GetComponent<Ficha>().commandIssued(square)) commandSuccessful();
+            if(pieceToMove.GetComponent<Ficha>().commandIssued(square)) newTurn();
         }
         else{
             Debug.Log("Not your piece!");
@@ -78,11 +69,18 @@ public class Manager : MonoBehaviour
         }
     }
 
-    public void commandSuccessful(){
+    public void newTurn(){
         pieceToMove = null;
-        if(turn == "White") turn = "Black";
+        if(turn == "White")turn = "Black";
         else turn = "White";
+
+        GameObject king = GameObject.Find(turn+"King");
+        if(king == null){
+            Debug.Log(turn + " lost");
+        }
     }
+
+
 
 
 }

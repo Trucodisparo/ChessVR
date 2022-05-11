@@ -14,6 +14,10 @@ public class Manager : MonoBehaviour
     private string[] squares;
     private int squaresRecognized;
 
+    private GameObject pieceToMove;
+
+    private string turn;
+
     public KeywordRecognizer m_Recognizer;
     // Start is called before the first frame update
     void Start()
@@ -36,6 +40,8 @@ public class Manager : MonoBehaviour
         squaresRecognized = 0;
 
         squares = new string[2];
+        
+        turn = "White";
     }
 
     // Update is called once per frame
@@ -52,24 +58,36 @@ public class Manager : MonoBehaviour
         builder.AppendFormat("\tDuration: {0} seconds{1}", args.phraseDuration.TotalSeconds, Environment.NewLine);
         Debug.Log(builder.ToString());
 
-        if(args.text == "Cancelar") squaresRecognized = 0;
+        if(args.text == "Cancelar") pieceToMove = null;
         else{
+            if(pieceToMove == null) pieceToMove = GameObject.Find(args.text).GetComponent<Square>().piece;
+            else{
+                makeCommand(args.text);
+            }
+
+            /*
             squares[squaresRecognized] = args.text;
             squaresRecognized++;
             Debug.Log(squaresRecognized + " // " + squares[squaresRecognized-1]);
             if(squaresRecognized == 2){
                 squaresRecognized = 0;
                 makeCommand();
-            }
+            }*/
         }
     }
 
-    private void makeCommand(){
-        GameObject square = GameObject.Find(squares[0]);
-        GameObject piece = square.GetComponent<Square>().piece;
-        if(piece != null && piece.tag == "White"){
-            piece.GetComponent<Ficha>().commandIssued(squares[1]);
+    private void makeCommand(string square){
+        if(pieceToMove.tag == turn){
+            if(pieceToMove.commandIssued(square)) commandSuccessful();
         }
+        else{
+            Debug.Log("Not your piece!");
+        }
+    }
+
+    public void commandSuccessful(){
+        if(turn == "White") turn = "Black";
+        else turn = "White";
     }
 
 

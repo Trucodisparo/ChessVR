@@ -16,7 +16,7 @@ public class HorseMovement : Ficha
         
     }
 
-    public override bool isLegalMove(GameObject square = null, bool hasEnemy = false)
+    public override bool isLegalMove(GameObject square, bool hasEnemy = false)
     {
         Vector2 destination = square.GetComponent<Square>().matrixPosition;
 

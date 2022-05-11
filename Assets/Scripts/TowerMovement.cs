@@ -18,8 +18,7 @@ public class TowerMovement : Ficha
     
     }
 
-    public override bool isLegalMove(GameObject square = null, bool hasEnemy = false){
-        if(square == null) square = desiredMove;
+    public override bool isLegalMove(GameObject square, bool hasEnemy = false){
         Vector2 destination = square.GetComponent<Square>().matrixPosition;
 
         if(getDirection(destination) == Direction.NOT_VALID) return false;

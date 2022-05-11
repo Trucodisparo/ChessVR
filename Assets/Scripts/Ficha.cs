@@ -8,9 +8,6 @@ public abstract class Ficha : MonoBehaviour
 
     public GameObject currentSquare;
 
-    public GameObject desiredMove;
-
-
     // Start is called before the first frame update
     void Start()
     {
@@ -56,13 +53,14 @@ public abstract class Ficha : MonoBehaviour
         return new Vector2(Mathf.Abs(vector.x), Mathf.Abs(vector.y));
     }
 
-    public virtual void commandIssued(string square){
-        desiredMove = getSquare(square);
-        if(isLegalMove()){
+    public virtual bool commandIssued(string square){
+        if(isLegalMove(getSquare(square))){
             move(desiredMove);
+            return true;
         }
         else{
             Debug.Log("Illegal move: " + desiredMove.GetComponent<Square>().matrixPosition + " // " + position);
+            return false;
         }
     }
 

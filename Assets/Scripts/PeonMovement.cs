@@ -20,9 +20,8 @@ public class PeonMovement : Ficha
         
     }
 
-    public override void commandIssued(string square){
-        desiredMove = getSquare(square);
-        if(isLegalMove()){
+    public override bool commandIssued(string square){
+        if(isLegalMove(getSquare(square))){
             move(desiredMove);
             if(gameObject.tag == "Black" && position.y == 1) promote();
             else if(gameObject.tag == "White" && position.y == 8) promote();
@@ -32,9 +31,7 @@ public class PeonMovement : Ficha
         }
     }
 
-    public override bool isLegalMove(GameObject square = null, bool hasEnemy = false){
-        if(square == null) square = desiredMove;
-
+    public override bool isLegalMove(GameObject square, bool hasEnemy = false){
         Vector2 firstMoveOK, moveOK, diagonalMoveOK;
         if(gameObject.tag == "Black"){
             firstMoveOK = new Vector2(0,-2);

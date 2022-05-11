@@ -74,6 +74,7 @@ public class Manager : MonoBehaviour
         }
         else{
             Debug.Log("Not your piece!");
+            pieceToMove = null;
         }
     }
 

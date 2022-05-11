@@ -32,6 +32,22 @@ public class HorseMovement : Ficha
         return false;
     }
 
+/*
+     protected override IEnumerator StartMovement(float time, GameObject desiredMove)
+    {
+        float elapsedtime = 0;
+        Vector3 pos_fin = desiredMove.transform.position;
+
+        while(elapsedtime < time)
+        {
+            transform.position = Vector3.Lerp(transform.position, pos_fin, (elapsedtime / time));
+            elapsedtime += Time.deltaTime;
+            yield return null;
+        }
+    }
+
+*/
+
     public override void move(GameObject desiredMove){
         currentSquare.GetComponent<Square>().pieceMoved();  // Como la pieza se mueve, la posición antigua queda a null, sin pieza.
         desiredMove.GetComponent<Square>().newPiece(this.gameObject);   // A la posición destino se le guarda la ficha que realizará el movimiento hacia ella.

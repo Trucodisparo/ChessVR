@@ -28,7 +28,7 @@ public abstract class Ficha : MonoBehaviour
         return GameObject.Find(square);
     }
 
-    protected IEnumerator StartMovement(float time, GameObject desiredMove)
+    protected virtual IEnumerator StartMovement(float time, GameObject desiredMove)
     {
         float elapsedtime = 0;
         Vector3 pos_fin = desiredMove.transform.position;

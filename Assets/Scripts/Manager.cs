@@ -11,11 +11,7 @@ public class Manager : MonoBehaviour
 {
     [SerializeField]
     private string[] m_Keywords;
-    private string[] squares;
-    private int squaresRecognized;
-
     private GameObject pieceToMove;
-
     private string turn;
 
     public KeywordRecognizer m_Recognizer;
@@ -86,6 +82,7 @@ public class Manager : MonoBehaviour
     }
 
     public void commandSuccessful(){
+        pieceToMove = null;
         if(turn == "White") turn = "Black";
         else turn = "White";
     }

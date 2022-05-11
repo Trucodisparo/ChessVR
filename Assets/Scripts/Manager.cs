@@ -77,6 +77,7 @@ public class Manager : MonoBehaviour
         GameObject king = GameObject.Find(turn+"King");
         if(king == null){
             Debug.Log(turn + " lost");
+            m_Recognizer.Stop();
         }
     }
 

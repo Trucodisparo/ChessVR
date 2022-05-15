@@ -50,10 +50,23 @@ public class Manager : MonoBehaviour
         builder.AppendFormat("\tDuration: {0} seconds{1}", args.phraseDuration.TotalSeconds, Environment.NewLine);
         Debug.Log(builder.ToString());
 
-        if(args.text == "Cancelar") pieceToMove = null;
+        if(args.text == "Cancelar" && pieceToMove != null)
+        {
+            pieceToMove.GetComponent<Renderer>().material = pieceToMove.GetComponent<Ficha>().unSelected;
+            pieceToMove = null;
+        } 
+        else if(args.text == "Cancelar" && pieceToMove == null)
+        {
+            pieceToMove = null;
+        }
         else{
-            if(pieceToMove == null) pieceToMove = GameObject.Find(args.text).GetComponent<Square>().piece;
+            if(pieceToMove == null) 
+            {
+                pieceToMove = GameObject.Find(args.text).GetComponent<Square>().piece;
+                pieceToMove.GetComponent<Renderer>().material = pieceToMove.GetComponent<Ficha>().Selected;
+            }
             else{
+                pieceToMove.GetComponent<Renderer>().material = pieceToMove.GetComponent<Ficha>().unSelected;
                 makeCommand(args.text);
             }
         }

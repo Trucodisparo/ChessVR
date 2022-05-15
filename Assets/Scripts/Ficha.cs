@@ -8,10 +8,13 @@ public abstract class Ficha : MonoBehaviour
 
     public GameObject currentSquare;
 
+    public Material unSelected;
+    public Material Selected;
+
     // Start is called before the first frame update
     void Start()
     {
-
+        //unSelected = gameObject.GetComponent<Renderer>().material;
     }
 
     // Update is called once per frame

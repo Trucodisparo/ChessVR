@@ -82,7 +82,7 @@ public class PeonMovement : Ficha
             }
         else if(gameObject.tag == "Black")
             for(int i=(int)position.y-1;i>=destination.y; i--){
-                square = getSquare(board.GetComponent<Board>().squares[i-1].name[(int)position.x-1]); // position [x,y] = array [x-1,y-1]
+                square = getSquare(board.GetComponent<Board>().squares[(int)position.x-1].name[i-1]); // position [x,y] = array [x-1,y-1]
                 if(square.GetComponent<Square>().hasPiece()) return true;
             }
         return false;

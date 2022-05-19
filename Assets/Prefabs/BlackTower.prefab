@@ -364,7 +364,7 @@ GameObject:
   - component: {fileID: 7874095969404451442}
   m_Layer: 6
   m_Name: BlackTower
-  m_TagString: Untagged
+  m_TagString: Black
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

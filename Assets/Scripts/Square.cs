@@ -11,7 +11,7 @@ public class Square : MonoBehaviour
     public Vector2 matrixPosition;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         if(ogPiece != null){
             piece = Instantiate(ogPiece,transform.position,ogPiece.transform.rotation);

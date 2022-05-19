@@ -361,7 +361,7 @@ GameObject:
   - component: {fileID: 8875022121358701880}
   - component: {fileID: 7457128303183844027}
   - component: {fileID: 6579156795719255716}
-  - component: {fileID: 2030550697683097208}
+  - component: {fileID: 768478227818656014}
   m_Layer: 6
   m_Name: BlackRook2
   m_TagString: Untagged
@@ -434,7 +434,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &2030550697683097208
+--- !u!114 &768478227818656014
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -443,7 +443,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 9024556753946197064}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54005f7dcfbe04428a9b9f989d4f3e36, type: 3}
+  m_Script: {fileID: 11500000, guid: e99d7f7d001d2495990b8d996a628923, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0}

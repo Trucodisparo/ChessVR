@@ -361,7 +361,7 @@ GameObject:
   - component: {fileID: 6975229697399392961}
   - component: {fileID: 8978943190004821314}
   - component: {fileID: 4659901611523389789}
-  - component: {fileID: 1918052163830072254}
+  - component: {fileID: -9052389289298370288}
   m_Layer: 6
   m_Name: WhiteQueen2
   m_TagString: Untagged
@@ -434,7 +434,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &1918052163830072254
+--- !u!114 &-9052389289298370288
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -443,7 +443,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7411585100053087153}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54005f7dcfbe04428a9b9f989d4f3e36, type: 3}
+  m_Script: {fileID: 11500000, guid: eebc4be64f8414b03a49a9eff4f6534d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0}

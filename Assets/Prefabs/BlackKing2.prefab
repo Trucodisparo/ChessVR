@@ -361,7 +361,7 @@ GameObject:
   - component: {fileID: 9169853211131455483}
   - component: {fileID: 7140105223966441592}
   - component: {fileID: 6856283270151607399}
-  - component: {fileID: 7892075829181441735}
+  - component: {fileID: 6818437922305164987}
   m_Layer: 6
   m_Name: BlackKing2
   m_TagString: Untagged
@@ -434,7 +434,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &7892075829181441735
+--- !u!114 &6818437922305164987
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -443,7 +443,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8743210894197403275}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54005f7dcfbe04428a9b9f989d4f3e36, type: 3}
+  m_Script: {fileID: 11500000, guid: 8cfb051a7096c48b4855d4cce3dc355c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0}

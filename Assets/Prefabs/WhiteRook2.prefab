@@ -86,7 +86,7 @@ GameObject:
   - component: {fileID: 1581315383786992558}
   - component: {fileID: 695408947995251757}
   - component: {fileID: 3861344447813632050}
-  - component: {fileID: 1172268395029841516}
+  - component: {fileID: 606654413967877931}
   m_Layer: 6
   m_Name: WhiteRook2
   m_TagString: Untagged
@@ -159,7 +159,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &1172268395029841516
+--- !u!114 &606654413967877931
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -168,7 +168,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1433893883766045406}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54005f7dcfbe04428a9b9f989d4f3e36, type: 3}
+  m_Script: {fileID: 11500000, guid: e99d7f7d001d2495990b8d996a628923, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0}

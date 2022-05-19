@@ -361,7 +361,7 @@ GameObject:
   - component: {fileID: 6981896277348590753}
   - component: {fileID: 8985752844424790818}
   - component: {fileID: 4648585678766741309}
-  - component: {fileID: 7245287694155244464}
+  - component: {fileID: 7397233653262327940}
   m_Layer: 6
   m_Name: WhiteKing2
   m_TagString: Untagged
@@ -434,7 +434,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &7245287694155244464
+--- !u!114 &7397233653262327940
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -443,7 +443,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7418394753919430097}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54005f7dcfbe04428a9b9f989d4f3e36, type: 3}
+  m_Script: {fileID: 11500000, guid: 8cfb051a7096c48b4855d4cce3dc355c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0}

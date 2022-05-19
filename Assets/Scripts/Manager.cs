@@ -8,7 +8,6 @@ using System;
 using TMPro;
 using Photon.Pun;
 
-
 public class Manager : MonoBehaviour
 {
     [SerializeField]

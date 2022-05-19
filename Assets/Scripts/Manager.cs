@@ -183,8 +183,9 @@ public class Manager : MonoBehaviour
         paused = false;
         player.GetComponent<SC_FPSController>().enabled = true;
         if(turn == player.GetComponent<Player>().color && started) m_Recognizer.Start();
-        middleText.SetActive(false);
         exitButton.SetActive(false);
+
+        if(!started) middleText.GetComponent<TextMeshProUGUI>().text = "Esperando a un contrincante...";
         
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;

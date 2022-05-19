@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2269575530334216478}
   - component: {fileID: 2269575530334216476}
   - component: {fileID: 2269575530334216477}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 3773245589903734451}
   - component: {fileID: 3102134400098314153}
   - component: {fileID: -2328175023233469043}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: BlackPlayer
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -236,7 +236,7 @@ GameObject:
   - component: {fileID: 2269575532107518447}
   - component: {fileID: 2269575532107518417}
   - component: {fileID: 2269575532107518416}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: FPSCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}

@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using System;
 using TMPro;
 using Photon.Pun;
+using UnityEngine.SceneManagement;
 
 public class Manager : MonoBehaviour
 {
@@ -15,16 +16,24 @@ public class Manager : MonoBehaviour
     private GameObject pieceToMove;
     private string turn;
 
-    private GameObject player;
+    private GameObject player, exitButton, middleText;
 
     public KeywordRecognizer m_Recognizer;
 
     PhotonView view;
 
+    private bool started;
+    private bool paused;
+    private bool ended;
+
     // Start is called before the first frame update
     void Start()
     {
         view = GetComponent<PhotonView>();
+
+        started = false;
+        paused = false;
+        ended = false;
 
         m_Keywords = new string[65];
         GameObject board = GameObject.Find("Tablero");
@@ -41,15 +50,40 @@ public class Manager : MonoBehaviour
 
         m_Recognizer = new KeywordRecognizer(m_Keywords);
         m_Recognizer.OnPhraseRecognized += OnPhraseRecognized;
+
+        //Preparamos la GUI
+        middleText = GameObject.Find("MiddleText");
+        exitButton = GameObject.Find("Salir");
+        exitButton.GetComponent<Button>().onClick.AddListener(exitGame);
+        exitButton.SetActive(false);
         
         turn = "Black";
-        newTurn();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(!started && PhotonNetwork.CurrentRoom.PlayerCount == 2) startGame();
+
+        if(PhotonNetwork.CurrentRoom.PlayerCount == 1 && started) endGame("Victoria por abandono");
+
+        //Pausamos el juego
+        if(Input.GetKeyDown(KeyCode.Escape)){
+            if(!ended){
+                if(!paused){ //Si no está en pausa, pausamos
+                    pause();
+                }
+                else{ //Si está en pausa, volvemos al juego
+                    unpause();
+                }
+            }
+        }
+    }
+
+    private void startGame(){
+        middleText.SetActive(false);
+        exitButton.SetActive(false);
+        newTurn();
     }
 
     private void OnPhraseRecognized(PhraseRecognizedEventArgs args)
@@ -60,26 +94,28 @@ public class Manager : MonoBehaviour
         builder.AppendFormat("\tDuration: {0} seconds{1}", args.phraseDuration.TotalSeconds, Environment.NewLine);
         Debug.Log(builder.ToString());
 
-        if(args.text == "Cancelar" && pieceToMove != null)
-        {
-            pieceToMove.GetComponent<Renderer>().material = pieceToMove.GetComponent<Ficha>().unSelected;
-            pieceToMove = null;
-        } 
-        else if(args.text == "Cancelar" && pieceToMove == null)
-        {
-            pieceToMove = null;
-        }
-        else{
-            if(pieceToMove == null) 
+        if(!paused){
+            if(args.text == "Cancelar" && pieceToMove != null)
             {
-                if(GameObject.Find(args.text).GetComponent<Square>().piece != null){
-                    pieceToMove = GameObject.Find(args.text).GetComponent<Square>().piece;
-                    pieceToMove.GetComponent<Renderer>().material = pieceToMove.GetComponent<Ficha>().Selected;
-                }
+                pieceToMove.GetComponent<Renderer>().material = pieceToMove.GetComponent<Ficha>().unSelected;
+                pieceToMove = null;
+            } 
+            else if(args.text == "Cancelar" && pieceToMove == null)
+            {
+                pieceToMove = null;
             }
             else{
-                pieceToMove.GetComponent<Renderer>().material = pieceToMove.GetComponent<Ficha>().unSelected;
-                view.RPC("makeCommand", RpcTarget.All, pieceToMove.GetComponent<Ficha>().currentSquare.name, args.text);
+                if(pieceToMove == null) 
+                {
+                    if(GameObject.Find(args.text).GetComponent<Square>().piece != null){
+                        pieceToMove = GameObject.Find(args.text).GetComponent<Square>().piece;
+                        pieceToMove.GetComponent<Renderer>().material = pieceToMove.GetComponent<Ficha>().Selected;
+                    }
+                }
+                else{
+                    pieceToMove.GetComponent<Renderer>().material = pieceToMove.GetComponent<Ficha>().unSelected;
+                    view.RPC("makeCommand", RpcTarget.All, pieceToMove.GetComponent<Ficha>().currentSquare.name, args.text);
+                }
             }
         }
     }
@@ -103,7 +139,8 @@ public class Manager : MonoBehaviour
 
         GameObject king = GameObject.Find(turn+"King");
         if(king == null){
-            Debug.Log(turn + " lost");
+            if(turn == "White") endGame("Victoria de Black");
+            else if(turn == "Black") endGame("Victoria de White");
             if(m_Recognizer.IsRunning) m_Recognizer.Stop();
         }
     }
@@ -112,5 +149,45 @@ public class Manager : MonoBehaviour
         this.player = player;
     }
 
+    private void endGame(string message){
+        middleText.GetComponent<TextMeshProUGUI>().text = message;
+        middleText.SetActive(true);
+        exitButton.SetActive(true);
+    }
+
+    private void exitGame(){
+        StartCoroutine(BackToMain());
+    }
+
+    IEnumerator BackToMain(){
+        PhotonNetwork.Disconnect();
+        while(PhotonNetwork.IsConnected)
+            yield return null;
+        Debug.Log("Disconnected from Photon");
+        SceneManager.LoadScene(0);
+    }
+
+    private void pause(){
+        paused = true;
+        player.GetComponent<SC_FPSController>().enabled = false;
+        if(m_Recognizer.IsRunning) m_Recognizer.Stop();
+        middleText.GetComponent<TextMeshProUGUI>().text = "En pausa";
+        middleText.SetActive(true);
+        exitButton.SetActive(true);
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    private void unpause(){
+        paused = false;
+        player.GetComponent<SC_FPSController>().enabled = true;
+        if(turn == player.GetComponent<Player>().color && started) m_Recognizer.Start();
+        middleText.SetActive(false);
+        exitButton.SetActive(false);
+        
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
 
 }

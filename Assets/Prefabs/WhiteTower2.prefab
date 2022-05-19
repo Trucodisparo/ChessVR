@@ -286,8 +286,9 @@ GameObject:
   - component: {fileID: 8660133999211984538}
   - component: {fileID: 7239988074737389849}
   - component: {fileID: 6361699900978103558}
+  - component: {fileID: -1943942802491667298}
   m_Layer: 6
-  m_Name: Sphere
+  m_Name: WhiteTower2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -358,6 +359,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &-1943942802491667298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9095365692325183466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54005f7dcfbe04428a9b9f989d4f3e36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: {x: 0, y: 0}
+  currentSquare: {fileID: 0}
+  unSelected: {fileID: 2100000, guid: b02b24d20faf54a73918a99644d32078, type: 2}
+  Selected: {fileID: 2100000, guid: f11e662006ec3bd4da392868a7b4aafc, type: 2}
 --- !u!1 &9182560150278682847
 GameObject:
   m_ObjectHideFlags: 0

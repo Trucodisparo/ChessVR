@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
         view = GetComponent<PhotonView>();
         if(!(view.IsMine)) {
             this.gameObject.GetComponent<SC_FPSController>().enabled = false;
-            this.gameObject.transform.GetChild(1).gameObject.SetActive(false);
+            this.gameObject.transform.GetChild(1).gameObject.SetActive(false); //desactivamos camara de los otros jugadores
         }
     }
 
@@ -22,11 +22,5 @@ public class Player : MonoBehaviour
     void Update()
     {
         
-    }
-
-    public void newTurn(string turn){
-        if (turn == color){
-
-        }
     }
 }

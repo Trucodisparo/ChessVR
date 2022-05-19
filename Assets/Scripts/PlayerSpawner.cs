@@ -8,8 +8,8 @@ public class PlayerSpawner : MonoBehaviour
     public GameObject whitePlayer;
     public GameObject blackPlayer;
 
-    Vector3 whiteSpawn = new Vector3(-0.2f,1.75f,-17.8f);
-    Vector3 blackSpawn = new Vector3(-0.2f,1.75f,17.8f);
+    Vector3 blackSpawn = new Vector3(-0.2f,1.75f,-17.8f);
+    Vector3 whiteSpawn = new Vector3(-0.2f,1.75f,17.8f);
 
     // Start is called before the first frame update
     void Start()

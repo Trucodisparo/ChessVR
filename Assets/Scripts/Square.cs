@@ -9,6 +9,7 @@ public class Square : MonoBehaviour
     public GameObject piece;
 
     public Vector2 matrixPosition;
+    public GameObject particles;
 
     // Start is called before the first frame update
     void Awake()
@@ -18,6 +19,7 @@ public class Square : MonoBehaviour
             piece.GetComponent<Ficha>().setPosition(matrixPosition);
             piece.GetComponent<Ficha>().currentSquare = this.gameObject;
             piece.name = ogPiece.name;
+            particles = (GameObject)Resources.Load("Particles", typeof(GameObject));
         }
     }
 
@@ -45,7 +47,14 @@ public class Square : MonoBehaviour
     }
 
     public void newPiece(GameObject proposedPiece){
-        if(piece != null) Destroy(piece);
+        if(piece != null) 
+        {
+            Instantiate(particles, piece.transform.position, piece.transform.rotation);
+            if (particles.GetComponent<ParticleSystem>().isStopped)
+                    particles.GetComponent<ParticleSystem>().Play();
+
+            Destroy(piece);   
+        }
         piece = proposedPiece;
         piece.GetComponent<Ficha>().currentSquare = this.gameObject;
     }

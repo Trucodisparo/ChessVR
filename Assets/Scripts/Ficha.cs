@@ -10,6 +10,9 @@ public abstract class Ficha : MonoBehaviour
 
     public Material unSelected;
     public Material Selected;
+    public AudioSource audiosource;
+    public AudioClip soundMovement;
+
 
     // Start is called before the first frame update
     void Start()
@@ -49,6 +52,10 @@ public abstract class Ficha : MonoBehaviour
         desiredMove.GetComponent<Square>().newPiece(this.gameObject);
         setPosition(desiredMove.GetComponent<Square>().matrixPosition);
         currentSquare = desiredMove;
+
+        audiosource.clip = soundMovement;
+        audiosource.PlayOneShot(soundMovement);
+
         StartCoroutine(StartMovement(1f, desiredMove));
     }
 

@@ -133,6 +133,7 @@ public class Manager : MonoBehaviour
     }
 
     public void newTurn(){
+        pieceToMove.GetComponent<Renderer>().material = pieceToMove.GetComponent<Ficha>().unSelected;
         pieceToMove = null;
         if(turn == "White") turn = "Black";
         else turn = "White";

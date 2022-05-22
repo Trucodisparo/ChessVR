@@ -115,8 +115,11 @@ public class Manager : MonoBehaviour
                 if(pieceToMove == null) 
                 {
                     if(GameObject.Find(args.text).GetComponent<Square>().piece != null){
-                        pieceToMove = GameObject.Find(args.text).GetComponent<Square>().piece;
-                        pieceToMove.GetComponent<Renderer>().material = pieceToMove.GetComponent<Ficha>().Selected;
+                        if(GameObject.Find(args.text).GetComponent<Square>().piece.tag == turn){
+                            pieceToMove = GameObject.Find(args.text).GetComponent<Square>().piece;
+                            pieceToMove.GetComponent<Renderer>().material = pieceToMove.GetComponent<Ficha>().Selected;
+                        }
+                        else Debug.Log("No es tu pieza, tramposo!");
                     }
                 }
                 else{

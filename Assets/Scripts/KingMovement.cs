@@ -23,36 +23,9 @@ public class KingMovement : Ficha
         if(!square.GetComponent<Square>().hasAlly(this.gameObject))
             if((Abs(destination - position) == new Vector2(1,0)) || (Abs(destination - position) == new Vector2(0,1))
             || (Abs(destination - position) == new Vector2(1,1))) 
-                if(!isDangerous(square)) return true;
-
-        return false;
-    }
-
-    private bool isDangerous(GameObject square){
-        GameObject[] enemies;
-        if(gameObject.tag == "White") enemies = GameObject.FindGameObjectsWithTag("Black");
-        else enemies = GameObject.FindGameObjectsWithTag("White");
-        foreach(GameObject enemy in enemies){
-            if(enemy.GetComponent<Ficha>().isLegalMove(square, true)){
-                Debug.Log("King would be in danger!");
                 return true;
-            }
-        }
+
         return false;
     }
-
-    /*public bool CheckMate(){
-        GameObject board = GameObject.Find("Tablero");
-        if(isDangerous(getSquare(board.GetComponent<Board>().squares[(int)position.y].name[(int)position.x-1])) //North
-            && isDangerous(getSquare(board.GetComponent<Board>().squares[(int)position.y-2].name[(int)position.x-1])) //South
-            && isDangerous(getSquare(board.GetComponent<Board>().squares[(int)position.y-1].name[(int)position.x])) //East
-            && isDangerous(getSquare(board.GetComponent<Board>().squares[(int)position.y-1].name[(int)position.x-2])) //West
-            && isDangerous(getSquare(board.GetComponent<Board>().squares[(int)position.y].name[(int)position.x])) //NorthEast
-            && isDangerous(getSquare(board.GetComponent<Board>().squares[(int)position.y-2].name[(int)position.x])) //SouthEast
-            && isDangerous(getSquare(board.GetComponent<Board>().squares[(int)position.y].name[(int)position.x-2])) //NorthWest
-            && isDangerous(getSquare(board.GetComponent<Board>().squares[(int)position.y-2].name[(int)position.x-2]))) //SouthWest
-            return true;
-        else return false;
-    }*/
 
 }

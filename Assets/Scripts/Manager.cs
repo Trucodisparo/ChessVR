@@ -195,6 +195,7 @@ public class Manager : MonoBehaviour
         exitButton.SetActive(false);
 
         if(!started) middleText.GetComponent<TextMeshProUGUI>().text = "Esperando a un contrincante...";
+        else middleText.SetActive(false);
         
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;

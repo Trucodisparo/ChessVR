@@ -19,7 +19,6 @@ public class Square : MonoBehaviour
             piece.GetComponent<Ficha>().setPosition(matrixPosition);
             piece.GetComponent<Ficha>().currentSquare = this.gameObject;
             piece.name = ogPiece.name;
-            particles = (GameObject)Resources.Load("Particles", typeof(GameObject));
         }
     }
 

@@ -5,6 +5,10 @@ using UnityEngine.SceneManagement;
 using System;
 using System.Text;
 using UnityEngine.Windows.Speech;
+using UnityEngine.XR;
+using UnityEngine.XR.Management;
+using UnityEngine.UI;
+using UnityEngine.Subsystems;
 
 public class MainMenu : MonoBehaviour
 {
@@ -22,7 +26,18 @@ public class MainMenu : MonoBehaviour
         m_Recognizer = new KeywordRecognizer(m_Keywords);
         m_Recognizer.OnPhraseRecognized += OnPhraseRecognized;
         m_Recognizer.Start();
+    }
 
+    public  bool VR = false;
+
+    XRDisplaySubsystem display;
+
+    void Awake()
+    {
+        //StartCoroutine(StopXR());
+        Debug.Log(display);
+        StartCoroutine(StopXR());
+        DontDestroyOnLoad(this.gameObject);
     }
 
     // Update is called once per frame
@@ -59,4 +74,63 @@ public class MainMenu : MonoBehaviour
 
     }
 
+    public void switchVR(){
+        VR = !VR;
+    }
+
+    public void VRButton(){
+        switchVR();
+        if(VR){
+            GameObject.Find("VRText").GetComponent<Text>().text = "VR: ON";
+        }
+        else{
+            GameObject.Find("VRText").GetComponent<Text>().text = "VR: OFF";
+        }
+
+    }
+
+    public void enableVR(){
+        if(!VR)
+            StartCoroutine(StopXR());
+        else
+            StartCoroutine(InitXR());
+    }
+
+     public IEnumerator InitXR()
+    {
+        if(display == null) loadXR("oculus");
+        else display.Start();
+        yield return null;
+    }
+
+    public IEnumerator StopXR()
+    {
+        if(display != null) display.Stop();
+        yield return null;
+    }
+
+    void loadXR(string device)
+    {
+        List<XRDisplaySubsystemDescriptor> displays = new List<XRDisplaySubsystemDescriptor>();
+        SubsystemManager.GetSubsystemDescriptors(displays);
+        Debug.Log("Number of display providers found: " + displays.Count);
+
+        foreach (var d in displays)
+        {
+            Debug.Log("Scanning display id: " + d.id);
+
+            if (d.id.Contains(device))
+            {
+                Debug.Log("Creating display " + d.id);
+                XRDisplaySubsystem dispInst = d.Create();
+
+                if (dispInst != null)
+                {
+                    Debug.Log("Starting display " + d.id);
+                    dispInst.Start();
+                    display = dispInst;
+                }
+            }
+        }
+    }
 }

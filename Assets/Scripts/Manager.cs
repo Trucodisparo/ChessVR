@@ -22,6 +22,8 @@ public class Manager : MonoBehaviour
 
     PhotonView view;
 
+    public GameObject settingsManager;
+
     private bool started;
     private bool paused;
     private bool ended;
@@ -29,6 +31,9 @@ public class Manager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        settingsManager = GameObject.Find("SettingsManager");
+        settingsManager.GetComponent<MainMenu>().enableVR();
+
         view = GetComponent<PhotonView>();
 
         started = false;
@@ -63,9 +68,10 @@ public class Manager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!started && PhotonNetwork.CurrentRoom.PlayerCount == 2) startGame();
-
-        if(PhotonNetwork.CurrentRoom.PlayerCount == 1 && started) endGame("Victoria por abandono");
+        if(PhotonNetwork.IsConnected){
+            if(!started && PhotonNetwork.CurrentRoom.PlayerCount == 2) startGame();
+            if(PhotonNetwork.CurrentRoom.PlayerCount == 1 && started) endGame("Victoria por abandono");
+        }
 
         //Pausamos el juego
         if(Input.GetKeyDown(KeyCode.Escape)){
@@ -83,6 +89,7 @@ public class Manager : MonoBehaviour
     private void startGame(){
         middleText.SetActive(false);
         exitButton.SetActive(false);
+        started = true;
         newTurn();
     }
 
@@ -153,6 +160,7 @@ public class Manager : MonoBehaviour
         middleText.GetComponent<TextMeshProUGUI>().text = message;
         middleText.SetActive(true);
         exitButton.SetActive(true);
+        ended = true;
     }
 
     private void exitGame(){
@@ -164,6 +172,7 @@ public class Manager : MonoBehaviour
         while(PhotonNetwork.IsConnected)
             yield return null;
         Debug.Log("Disconnected from Photon");
+        Destroy(GameObject.Find("SettingsManager"));
         SceneManager.LoadScene(0);
     }
 

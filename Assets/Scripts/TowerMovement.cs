@@ -21,11 +21,16 @@ public class TowerMovement : Ficha
     public override bool isLegalMove(GameObject square, bool hasEnemy = false){
         Vector2 destination = square.GetComponent<Square>().matrixPosition;
 
-        if(getDirection(destination) == Direction.NOT_VALID) return false;
+        if(getDirection(destination) == Direction.NOT_VALID){
+            Debug.Log(getDirection(destination));
+            return false;
+        }
 
         if(!square.GetComponent<Square>().hasAlly(this.gameObject))
-            if(!pathBlocked(destination))
+            if(!pathBlocked(destination)){
                 return true;
+            }
+            else Debug.Log("Path blocked");
 
         return false;
     }
@@ -35,33 +40,46 @@ public class TowerMovement : Ficha
         GameObject board = GameObject.Find("Tablero");
         GameObject square;
 
+        int i, j;
+
         switch(direction){
             case Direction.N:
-                for(int i=(int)position.y+1;i<destination.y; i++){
-                    square = getSquare(board.GetComponent<Board>().squares[i-1].name[(int)position.x-1]); // position [x,y] = array [x-1,y-1]
-                    if(square.GetComponent<Square>().hasPiece()) return true;
+                for(i=(int)position.y+1;i<destination.y; i++){
+                    square = getSquare(board.GetComponent<Board>().squares[(int)position.x-1].name[i-1]); // position [x,y] = array [x-1,y-1]
+                    if(square.GetComponent<Square>().hasPiece()){
+                        Debug.Log("Path blocked at " + square.name);
+                        return true;
+                    }
                 }
                 break;
             case Direction.S:
-                for(int i=(int)position.y-1;i>destination.y; i--){
-                    square = getSquare(board.GetComponent<Board>().squares[i-1].name[(int)position.x-1]); // position [x,y] = array [x-1,y-1]
-                    if(square.GetComponent<Square>().hasPiece()) return true;
+                for(i=(int)position.y-1;i>destination.y; i--){
+                    square = getSquare(board.GetComponent<Board>().squares[(int)position.x-1].name[i-1]); // position [x,y] = array [x-1,y-1]
+                    if(square.GetComponent<Square>().hasPiece()){
+                        Debug.Log("Path blocked at " + square.name);
+                        return true;
+                    }
                 }
                 break;
             case Direction.E:
-                for(int j=(int)position.x+1;j<destination.x; j++){
-                    square = getSquare(board.GetComponent<Board>().squares[(int)position.y-1].name[j-1]); // position [x,y] = array [x-1,y-1]
-                    if(square.GetComponent<Square>().hasPiece()) return true;
+                for(j=(int)position.x+1;j<destination.x; j++){
+                    square = getSquare(board.GetComponent<Board>().squares[j-1].name[(int)position.y-1]); // position [x,y] = array [x-1,y-1]
+                    if(square.GetComponent<Square>().hasPiece()){
+                        Debug.Log("Path blocked at " + square.name);
+                        return true;
+                    }
                 }
                 break;
             case Direction.W:
-                for(int j=(int)position.x-1;j>destination.x; j--){
-                    square = getSquare(board.GetComponent<Board>().squares[(int)position.y-1].name[j-1]); // position [x,y] = array [x-1,y-1]
-                    if(square.GetComponent<Square>().hasPiece()) return true;
+                for(j=(int)position.x-1;j>destination.x; j--){
+                    square = getSquare(board.GetComponent<Board>().squares[j-1].name[(int)position.y-1]); // position [x,y] = array [x-1,y-1]
+                    if(square.GetComponent<Square>().hasPiece()){
+                        Debug.Log("Path blocked at " + square.name);
+                        return true;
+                    }
                 }
                 break;
         }
-
         return false;
     }
 

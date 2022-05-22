@@ -120,7 +120,6 @@ public class Manager : MonoBehaviour
                     }
                 }
                 else{
-                    pieceToMove.GetComponent<Renderer>().material = pieceToMove.GetComponent<Ficha>().unSelected;
                     view.RPC("makeCommand", RpcTarget.All, pieceToMove.GetComponent<Ficha>().currentSquare.name, args.text);
                 }
             }

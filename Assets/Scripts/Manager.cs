@@ -181,16 +181,6 @@ public class Manager : MonoBehaviour
         else turn = "White";
 
         GameObject.Find("TurnUI").GetComponent<TextMeshProUGUI>().text = "Turno: " + turn;
-
-        /*
-        GameObject king = GameObject.Find(turn+"King");
-        Debug.Log(king.GetComponent<Ficha>().position);
-        if(king == null){
-            //Perdemos cuando en nuestro turno no se encuentra al rey de nuestro color.
-            if(turn == "White") endGame("Victoria de Black");
-            else if(turn == "Black") endGame("Victoria de White");
-        }
-        */
     }
 
     public void setPlayer(GameObject player){

@@ -50,7 +50,7 @@ public class Square : MonoBehaviour
             //Se tarda demasiado en destruir la pieza, así que notificamos al manager si se ha asesinado a un rey para acabar el juego
             if(piece.name == "BlackKing") GameObject.Find("GameManager").gameObject.GetComponent<Manager>().endGame("Victoria para White");
             else if (piece.name == "WhiteKing") GameObject.Find("GameManager").gameObject.GetComponent<Manager>().endGame("Victoria para Black");
-            piece.GetComponent<Ficha>().playWhenDestroyed();
+            piece.GetComponent<Ficha>().Die();
             Destroy(piece);   
         }
         piece = proposedPiece;

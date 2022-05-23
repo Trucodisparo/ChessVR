@@ -19,9 +19,10 @@ public class MainMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        m_Keywords = new string[2];
+        m_Keywords = new string[3];
         m_Keywords[0] = "Jugar";
         m_Keywords[1] = "Salir";
+        m_Keywords[2] = "VR";
 
         m_Recognizer = new KeywordRecognizer(m_Keywords);
         m_Recognizer.OnPhraseRecognized += OnPhraseRecognized;
@@ -35,7 +36,6 @@ public class MainMenu : MonoBehaviour
     void Awake()
     {
         //StartCoroutine(StopXR());
-        Debug.Log(display);
         StartCoroutine(StopXR());
         DontDestroyOnLoad(this.gameObject);
     }
@@ -68,6 +68,7 @@ public class MainMenu : MonoBehaviour
         switch(args.text)
         {
             case "Jugar": StartGame(); break;
+            case "VR": VRButton(); break;
             case "Salir": EndGame(); break;
             default: break;
         }

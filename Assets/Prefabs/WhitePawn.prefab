@@ -103,6 +103,9 @@ MonoBehaviour:
   Selected: {fileID: 2100000, guid: f11e662006ec3bd4da392868a7b4aafc, type: 2}
   audiosource: {fileID: -5838735589129410511}
   soundMovement: {fileID: 8300000, guid: 5066388771ad3e14f87140f1d2494f2a, type: 3}
+  soundDestroyed: {fileID: 8300000, guid: 9722546f3b8334e48a53141f018a0e3d, type: 3}
+  particles: {fileID: 891595910130488922, guid: fd81987c0dfbdda4f8d788fc4e5ac4fa,
+    type: 3}
 --- !u!82 &-5838735589129410511
 AudioSource:
   m_ObjectHideFlags: 0

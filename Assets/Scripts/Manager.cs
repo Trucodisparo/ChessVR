@@ -16,7 +16,7 @@ public class Manager : MonoBehaviour
     private GameObject pieceToMove;
     private string turn;
 
-    private GameObject player, exitButton, middleText;
+    private GameObject player, exitButton, middleText, continueButton;
 
     public KeywordRecognizer m_Recognizer;
 
@@ -27,6 +27,10 @@ public class Manager : MonoBehaviour
     private bool started;
     private bool paused;
     private bool ended;
+    
+    public AudioSource audioPlayer;
+    public AudioClip winning, losing, error;
+
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +44,7 @@ public class Manager : MonoBehaviour
         paused = false;
         ended = false;
 
+        //Reconocedor de movimientos
         m_Keywords = new string[65];
         GameObject board = GameObject.Find("Tablero");
         int k = 0;
@@ -58,8 +63,10 @@ public class Manager : MonoBehaviour
 
         //Preparamos la GUI
         middleText = GameObject.Find("MiddleText");
+        continueButton = GameObject.Find("Continuar");
+        continueButton.GetComponent<Button>().onClick.AddListener(unpause); //Botón de salir de pausa
         exitButton = GameObject.Find("Salir");
-        exitButton.GetComponent<Button>().onClick.AddListener(exitGame);
+        exitButton.GetComponent<Button>().onClick.AddListener(exitGame); //Salimos si clickamos el botón
         exitButton.SetActive(false);
         
         turn = "Black";
@@ -70,7 +77,12 @@ public class Manager : MonoBehaviour
     {
         if(PhotonNetwork.IsConnected){
             if(!started && PhotonNetwork.CurrentRoom.PlayerCount == 2) startGame();
-            if(PhotonNetwork.CurrentRoom.PlayerCount == 1 && started) endGame("Victoria por abandono");
+            if(PhotonNetwork.CurrentRoom.PlayerCount == 1 && started){
+                endGame("Victoria por abandono");
+                //Tocamos sonido de victoria
+                audioPlayer.clip = winning;
+                audioPlayer.Play();
+            }
         }
 
         //Pausamos el juego
@@ -101,31 +113,46 @@ public class Manager : MonoBehaviour
         builder.AppendFormat("\tDuration: {0} seconds{1}", args.phraseDuration.TotalSeconds, Environment.NewLine);
         Debug.Log(builder.ToString());
 
+        if(!started){
+            if(args.text == "Salir") exitGame();
+        }
+
         if(!paused){
-            if(args.text == "Cancelar" && pieceToMove != null)
-            {
-                pieceToMove.GetComponent<Renderer>().material = pieceToMove.GetComponent<Ficha>().unSelected;
-                pieceToMove = null;
-            } 
-            else if(args.text == "Cancelar" && pieceToMove == null)
-            {
-                pieceToMove = null;
-            }
-            else{
-                if(pieceToMove == null) 
+            if(args.text == "Pausa") pause();
+            else if(turn == player.GetComponent<Player>().color){ //Si no nos toca, no aceptamos inputs de movimientos (sólo pausa)
+                if(args.text == "Cancelar" && pieceToMove != null)
                 {
-                    if(GameObject.Find(args.text).GetComponent<Square>().piece != null){
-                        if(GameObject.Find(args.text).GetComponent<Square>().piece.tag == turn){
-                            pieceToMove = GameObject.Find(args.text).GetComponent<Square>().piece;
-                            pieceToMove.GetComponent<Renderer>().material = pieceToMove.GetComponent<Ficha>().Selected;
-                        }
-                        else Debug.Log("No es tu pieza, tramposo!");
-                    }
+                    pieceToMove.GetComponent<Renderer>().material = pieceToMove.GetComponent<Ficha>().unSelected;
+                    pieceToMove = null;
+                } 
+                else if(args.text == "Cancelar" && pieceToMove == null)
+                {
+                    pieceToMove = null;
                 }
                 else{
-                    view.RPC("makeCommand", RpcTarget.All, pieceToMove.GetComponent<Ficha>().currentSquare.name, args.text);
+                    if(pieceToMove == null) 
+                    {
+                        if(GameObject.Find(args.text).GetComponent<Square>().piece != null){
+                            if(GameObject.Find(args.text).GetComponent<Square>().piece.tag == turn){
+                                pieceToMove = GameObject.Find(args.text).GetComponent<Square>().piece;
+                                pieceToMove.GetComponent<Renderer>().material = pieceToMove.GetComponent<Ficha>().Selected;
+                            }
+                            else{
+                                Debug.Log("No es tu pieza, tramposo!");
+                                audioPlayer.clip = error;
+                                audioPlayer.Play();
+                            }
+                        }
+                    }
+                    else{
+                        view.RPC("makeCommand", RpcTarget.All, pieceToMove.GetComponent<Ficha>().currentSquare.name, args.text);
+                    }
                 }
             }
+        }
+        else{ //En menú de pausa
+            if(args.text == "Salir") exitGame();
+            if(args.text == "Continuar") unpause();
         }
     }
 
@@ -133,6 +160,10 @@ public class Manager : MonoBehaviour
     private void makeCommand(string pieceToMoveSquare, string square){
         GameObject piece = GameObject.Find(pieceToMoveSquare).GetComponent<Square>().piece;
         if(piece.GetComponent<Ficha>().commandIssued(square)) newTurn();
+        else{ //Comando sin éxito, se vuelve a intentar
+            audioPlayer.clip = error;
+            audioPlayer.Play();
+        }
     }
 
     public void newTurn(){
@@ -144,12 +175,9 @@ public class Manager : MonoBehaviour
 
         GameObject.Find("TurnUI").GetComponent<TextMeshProUGUI>().text = "Turno: " + turn;
 
-        //si no le toca al jugador de nuestra sesión, no grabamos.
-        if(turn == player.GetComponent<Player>().color) m_Recognizer.Start();
-        else if(m_Recognizer.IsRunning) m_Recognizer.Stop();
-
         GameObject king = GameObject.Find(turn+"King");
         if(king == null){
+            //Perdemos cuando en nuestro turno no se encuentra al rey de nuestro color.
             if(turn == "White") endGame("Victoria de Black");
             else if(turn == "Black") endGame("Victoria de White");
             if(m_Recognizer.IsRunning) m_Recognizer.Stop();
@@ -162,8 +190,18 @@ public class Manager : MonoBehaviour
 
     private void endGame(string message){
         middleText.GetComponent<TextMeshProUGUI>().text = message;
+        GameObject.Find("TurnUI").gameObject.SetActive(false);
         middleText.SetActive(true);
         exitButton.SetActive(true);
+
+        if(turn == player.GetComponent<Player>().color)
+            audioPlayer.clip = losing;
+        else
+            audioPlayer.clip = winning;
+
+        audioPlayer.Play();
+
+
         ended = true;
     }
 
@@ -183,10 +221,10 @@ public class Manager : MonoBehaviour
     private void pause(){
         paused = true;
         player.GetComponent<SC_FPSController>().enabled = false;
-        if(m_Recognizer.IsRunning) m_Recognizer.Stop();
         middleText.GetComponent<TextMeshProUGUI>().text = "En pausa";
         middleText.SetActive(true);
         exitButton.SetActive(true);
+        continueButton.SetActive(true);
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -195,8 +233,8 @@ public class Manager : MonoBehaviour
     private void unpause(){
         paused = false;
         player.GetComponent<SC_FPSController>().enabled = true;
-        if(turn == player.GetComponent<Player>().color && started) m_Recognizer.Start();
         exitButton.SetActive(false);
+        continueButton.SetActive(false);
 
         if(!started) middleText.GetComponent<TextMeshProUGUI>().text = "Esperando a un contrincante...";
         else middleText.SetActive(false);

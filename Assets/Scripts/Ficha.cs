@@ -11,7 +11,9 @@ public abstract class Ficha : MonoBehaviour
     public Material unSelected;
     public Material Selected;
     public AudioSource audiosource;
-    public AudioClip soundMovement;
+    public AudioClip soundMovement, soundDestroyed;
+
+    public GameObject particles;
 
 
     // Start is called before the first frame update
@@ -54,7 +56,7 @@ public abstract class Ficha : MonoBehaviour
         currentSquare = desiredMove;
 
         audiosource.clip = soundMovement;
-        audiosource.PlayOneShot(soundMovement);
+        audiosource.Play();
 
         StartCoroutine(StartMovement(1f, desiredMove));
     }
@@ -73,6 +75,16 @@ public abstract class Ficha : MonoBehaviour
             Debug.Log("Illegal move: " + desiredMove.GetComponent<Square>().matrixPosition + " // " + position);
             return false;
         }
+    }
+
+    void OnDestroy(){
+        //Mostramos partículas de destrucción
+        Instantiate(particles, transform.position, transform.rotation);
+        if (particles.GetComponent<ParticleSystem>().isStopped)
+                    particles.GetComponent<ParticleSystem>().Play();
+        
+        audiosource.clip = soundDestroyed;
+        audiosource.Play();
     }
 
     public abstract bool isLegalMove(GameObject square = null, bool hasEnemy = false);

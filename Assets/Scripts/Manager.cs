@@ -63,8 +63,11 @@ public class Manager : MonoBehaviour
 
         //Preparamos la GUI
         middleText = GameObject.Find("MiddleText");
+
         continueButton = GameObject.Find("Continuar");
         continueButton.GetComponent<Button>().onClick.AddListener(unpause); //Botón de salir de pausa
+        continueButton.SetActive(false);
+
         exitButton = GameObject.Find("Salir");
         exitButton.GetComponent<Button>().onClick.AddListener(exitGame); //Salimos si clickamos el botón
         exitButton.SetActive(false);
@@ -233,7 +236,7 @@ public class Manager : MonoBehaviour
     private void unpause(){
         paused = false;
         player.GetComponent<SC_FPSController>().enabled = true;
-        exitButton.SetActive(false);
+        if(started) exitButton.SetActive(false);
         continueButton.SetActive(false);
 
         if(!started) middleText.GetComponent<TextMeshProUGUI>().text = "Esperando a un contrincante...";

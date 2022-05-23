@@ -6,18 +6,19 @@ using Photon.Pun;
 
 public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
 {   
-    public InputField createInput;
-    public InputField joinInput;
-
-    public void CreateRoom(){
-        PhotonNetwork.CreateRoom(createInput.text);
-    }
-
-    public void JoinRoom(){
-        PhotonNetwork.JoinRoom(joinInput.text);
+    /*
+    public void JoinRandomRoom(){
+        PhotonNetwork.JoinRandomRoom();
     }
 
     public override void OnJoinedRoom(){
         PhotonNetwork.LoadLevel("Game");
     }
+
+    public override void OnJoinRoomFailed(){
+        RoomOptions = new RoomOptions();
+        roomOptions.maxPlayers = 2;
+        PhotonNetwork.CreateRoom(null, roomOptions);
+    }*/
+
 }

@@ -10,6 +10,11 @@ public class Square : MonoBehaviour
 
     public Vector2 matrixPosition;
 
+    public AudioSource audiosource;
+    public AudioClip soundDestroyed;
+
+    public GameObject particlesWhite, particlesBlack;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -50,7 +55,19 @@ public class Square : MonoBehaviour
             //Se tarda demasiado en destruir la pieza, así que notificamos al manager si se ha asesinado a un rey para acabar el juego
             if(piece.name == "BlackKing") GameObject.Find("GameManager").gameObject.GetComponent<Manager>().endGame("Victoria para White");
             else if (piece.name == "WhiteKing") GameObject.Find("GameManager").gameObject.GetComponent<Manager>().endGame("Victoria para Black");
-            piece.GetComponent<Ficha>().Die();
+
+            //Instanciar particulas
+            GameObject particles;
+            if(piece.tag == "White") particles = particlesWhite;
+            else particles = particlesBlack;
+            Instantiate(particles, piece.transform.position, piece.transform.rotation);
+            if (particles.GetComponent<ParticleSystem>().isStopped)
+                particles.GetComponent<ParticleSystem>().Play();
+            //Reproducimos sonido de muerte de ficha
+            audiosource.clip = soundDestroyed;
+            audiosource.Play();
+            //Destruimos la ficha
+            Destroy(this);
         }
         piece = proposedPiece;
         piece.GetComponent<Ficha>().currentSquare = this.gameObject;

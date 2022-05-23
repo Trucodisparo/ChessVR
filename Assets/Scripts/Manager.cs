@@ -168,8 +168,10 @@ public class Manager : MonoBehaviour
         GameObject piece = GameObject.Find(pieceToMoveSquare).GetComponent<Square>().piece;
         if(piece.GetComponent<Ficha>().commandIssued(square)) newTurn();
         else{ //Comando sin éxito, se vuelve a intentar
-            audioPlayer.clip = error;
-            audioPlayer.Play();
+            if(piece.tag == player.GetComponent<Player>().color){ //Solo oimos el error si es nuestra ficha
+                audioPlayer.clip = error;
+                audioPlayer.Play();
+            }
         }
     }
 

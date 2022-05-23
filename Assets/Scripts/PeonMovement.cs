@@ -6,7 +6,7 @@ using System;
 public class PeonMovement : Ficha
 {
     private bool firstMove;
-    GameObject promotion;
+    public GameObject promotion;
 
     // Start is called before the first frame update
     void Start()
@@ -18,20 +18,6 @@ public class PeonMovement : Ficha
     void Update()
     {
         
-    }
-
-    public override bool commandIssued(string square){
-        GameObject desiredMove = getSquare(square);
-        if(isLegalMove(desiredMove)){
-            move(desiredMove);
-            if(gameObject.tag == "Black" && position.y == 1) promote();
-            else if(gameObject.tag == "White" && position.y == 8) promote();
-            return true;
-        }
-        else{
-            Debug.Log("Illegal move: " + desiredMove.GetComponent<Square>().matrixPosition + " // " + position);
-            return false;
-        }
     }
 
     public override bool isLegalMove(GameObject square, bool hasEnemy = false){
@@ -68,7 +54,25 @@ public class PeonMovement : Ficha
         GameObject newPiece = Instantiate(promotion, transform.position, transform.rotation);
         newPiece.GetComponent<Ficha>().position = position;
         newPiece.GetComponent<Ficha>().currentSquare = currentSquare;
+        currentSquare.GetComponent<Square>().piece = newPiece;
         Destroy(this.gameObject);
+    }
+
+    protected override IEnumerator StartMovement(float time, GameObject desiredMove)
+    {
+        float elapsedtime = 0;
+        Vector3 pos_fin = desiredMove.transform.position;
+
+        while(elapsedtime < time)
+        {
+            transform.position = Vector3.Lerp(transform.position, pos_fin, (elapsedtime / time));
+            elapsedtime += Time.deltaTime;
+            yield return null;
+        }
+
+        if(gameObject.tag == "Black" && position.y == 1) promote();
+        else if(gameObject.tag == "White" && position.y == 8) promote();
+
     }
 
     private bool pathBlocked(Vector2 destination){

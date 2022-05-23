@@ -453,8 +453,7 @@ MonoBehaviour:
   Selected: {fileID: 2100000, guid: 03a3030978a10894d96d7c2c51afcc0b, type: 2}
   audiosource: {fileID: -213518200414529558}
   soundMovement: {fileID: 8300000, guid: 5066388771ad3e14f87140f1d2494f2a, type: 3}
-  soundDestroyed: {fileID: 8300000, guid: 9722546f3b8334e48a53141f018a0e3d, type: 3}
-  particles: {fileID: 2390195461214252607, guid: deb8fc0d16cfbf948bfd08dceac6aca2,
+  promotion: {fileID: 3061986095834524044, guid: 38902b783a938c5408f951f65969cd2c,
     type: 3}
 --- !u!82 &-213518200414529558
 AudioSource:

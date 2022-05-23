@@ -77,7 +77,7 @@ public abstract class Ficha : MonoBehaviour
         }
     }
 
-    void OnDestroy(){
+    public void playWhenDestroyed(){
         audiosource.clip = soundDestroyed;
         audiosource.Play();
         //Mostramos partículas de destrucción

@@ -215,6 +215,8 @@ public class Manager : MonoBehaviour
     private void exitGame(){
         Destroy(settingsManager);
         Destroy(GameObject.Find("BGMusicPlayer"));
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         StartCoroutine(BackToMain());
     }
 

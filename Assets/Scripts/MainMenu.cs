@@ -49,7 +49,7 @@ public class MainMenu : MonoBehaviour
 
     public void StartGame()
     {
-        m_Recognizer.Stop();
+        m_Recognizer.Dispose();
         SceneManager.LoadScene("Loading");
     }
 

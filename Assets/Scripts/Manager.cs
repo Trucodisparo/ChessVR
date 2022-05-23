@@ -213,6 +213,8 @@ public class Manager : MonoBehaviour
     }
 
     private void exitGame(){
+        Destroy(settingsManager);
+        Destroy(GameObject.Find("BGMusicPlayer"));
         StartCoroutine(BackToMain());
     }
 

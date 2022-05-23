@@ -47,7 +47,7 @@ public class Square : MonoBehaviour
     public void newPiece(GameObject proposedPiece){
         if(piece != null) 
         {
-            piece.playWhenDestroyed();
+            piece.GetComponent<Ficha>().playWhenDestroyed();
             Destroy(piece);   
         }
         piece = proposedPiece;

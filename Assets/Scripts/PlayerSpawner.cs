@@ -15,7 +15,7 @@ public class PlayerSpawner : MonoBehaviour
     void Start()
     {
         if(PhotonNetwork.CurrentRoom.PlayerCount == 1)
-            GameObject.Find("GameManager").GetComponent<Manager>().setPlayer(PhotonNetwork.Instantiate(whitePlayer.name, whiteSpawn, whitePlayer.transform.rotation));
+            GameObject.Find("GameManager").GetComponent<Manager>().setPlayer(PhotonNetwork.Instantiate(whitePlayer.name, whiteSpawn, Quaternion.identity));
         else if(PhotonNetwork.CurrentRoom.PlayerCount == 2)
             GameObject.Find("GameManager").GetComponent<Manager>().setPlayer(PhotonNetwork.Instantiate(blackPlayer.name, blackSpawn, Quaternion.identity));
     }

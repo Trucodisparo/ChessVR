@@ -61,6 +61,8 @@ public class Manager : MonoBehaviour
         m_Recognizer = new KeywordRecognizer(m_Keywords);
         m_Recognizer.OnPhraseRecognized += OnPhraseRecognized;
 
+        m_Recognizer.Start();
+
         //Preparamos la GUI
         middleText = GameObject.Find("MiddleText");
 
@@ -70,8 +72,7 @@ public class Manager : MonoBehaviour
 
         exitButton = GameObject.Find("Salir");
         exitButton.GetComponent<Button>().onClick.AddListener(exitGame); //Salimos si clickamos el botón
-        exitButton.SetActive(false);
-        
+
         turn = "Black";
     }
 

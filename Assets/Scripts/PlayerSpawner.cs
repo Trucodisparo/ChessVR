@@ -14,8 +14,10 @@ public class PlayerSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(PhotonNetwork.CurrentRoom.PlayerCount == 1)
+        if(PhotonNetwork.CurrentRoom.PlayerCount == 1){
             GameObject.Find("GameManager").GetComponent<Manager>().setPlayer(PhotonNetwork.Instantiate(whitePlayer.name, whiteSpawn, whitePlayer.transform.rotation));
+        }
+
         else if(PhotonNetwork.CurrentRoom.PlayerCount == 2)
             GameObject.Find("GameManager").GetComponent<Manager>().setPlayer(PhotonNetwork.Instantiate(blackPlayer.name, blackSpawn, Quaternion.identity));
     }

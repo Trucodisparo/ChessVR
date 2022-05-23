@@ -67,7 +67,7 @@ public class Square : MonoBehaviour
             audiosource.clip = soundDestroyed;
             audiosource.Play();
             //Destruimos la ficha
-            Destroy(this);
+            Destroy(piece);
         }
         piece = proposedPiece;
         piece.GetComponent<Ficha>().currentSquare = this.gameObject;

@@ -19,7 +19,7 @@ public class PlayerSpawner : MonoBehaviour
         }
 
         else if(PhotonNetwork.CurrentRoom.PlayerCount == 2)
-            GameObject.Find("GameManager").GetComponent<Manager>().setPlayer(PhotonNetwork.Instantiate(blackPlayer.name, blackSpawn, Quaternion.identity));
+            GameObject.Find("GameManager").GetComponent<Manager>().setPlayer(PhotonNetwork.Instantiate(blackPlayer.name, blackSpawn, blackPlayer.transform.rotation));
     }
 
     // Update is called once per frame

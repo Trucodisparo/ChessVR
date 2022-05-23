@@ -84,7 +84,7 @@ public class Manager : MonoBehaviour
     {
         if(PhotonNetwork.IsConnected){
             if(!started && PhotonNetwork.CurrentRoom.PlayerCount == 2) startGame();
-            if(PhotonNetwork.CurrentRoom.PlayerCount == 1 && started){
+            if(PhotonNetwork.CurrentRoom.PlayerCount == 1 && started && !ended){
                 endGame("Victoria por abandono");
                 //Tocamos sonido de victoria
                 audioPlayer.clip = winning;
@@ -182,20 +182,22 @@ public class Manager : MonoBehaviour
 
         GameObject.Find("TurnUI").GetComponent<TextMeshProUGUI>().text = "Turno: " + turn;
 
+        /*
         GameObject king = GameObject.Find(turn+"King");
+        Debug.Log(king.GetComponent<Ficha>().position);
         if(king == null){
             //Perdemos cuando en nuestro turno no se encuentra al rey de nuestro color.
             if(turn == "White") endGame("Victoria de Black");
             else if(turn == "Black") endGame("Victoria de White");
-            if(m_Recognizer.IsRunning) m_Recognizer.Stop();
         }
+        */
     }
 
     public void setPlayer(GameObject player){
         this.player = player;
     }
 
-    private void endGame(string message){
+    public void endGame(string message){
         middleText.GetComponent<TextMeshProUGUI>().text = message;
         GameObject.Find("TurnUI").gameObject.SetActive(false);
         middleText.SetActive(true);
@@ -207,7 +209,6 @@ public class Manager : MonoBehaviour
             audioPlayer.clip = winning;
 
         audioPlayer.Play();
-
 
         ended = true;
     }

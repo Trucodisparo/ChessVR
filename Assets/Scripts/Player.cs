@@ -24,6 +24,9 @@ public class Player : MonoBehaviour
             this.gameObject.transform.GetChild(3).gameObject.SetActive(false); 
             GameObject.Find("GUI").GetComponent<Canvas>().worldCamera = this.gameObject.transform.GetChild(2).gameObject.GetComponent<Camera>(); // Renderizamos la UI en la cámara
         }
+        if(view.IsMine && vrSettings.GetComponent<MainMenu>().VR){
+            this.gameObject.transform.GetChild(1).gameObject.SetActive(false); //Desactivamos nuestra cuerpo para no verno en VR al mover la cámara
+        }
     }
 
     // Update is called once per frame

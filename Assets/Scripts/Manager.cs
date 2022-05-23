@@ -120,7 +120,7 @@ public class Manager : MonoBehaviour
         builder.AppendFormat("\tDuration: {0} seconds{1}", args.phraseDuration.TotalSeconds, Environment.NewLine);
         Debug.Log(builder.ToString());
 
-        if(!started){
+        if(!started || ended){
             if(args.text == "Salir") exitGame();
         }
 
@@ -195,7 +195,7 @@ public class Manager : MonoBehaviour
         middleText.SetActive(true);
         exitButton.SetActive(true);
 
-        if(turn == player.GetComponent<Player>().color)
+        if(turn != player.GetComponent<Player>().color)
             audioPlayer.clip = losing;
         else
             audioPlayer.clip = winning;

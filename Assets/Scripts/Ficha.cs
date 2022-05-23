@@ -78,13 +78,12 @@ public abstract class Ficha : MonoBehaviour
     }
 
     void OnDestroy(){
+        audiosource.clip = soundDestroyed;
+        audiosource.Play();
         //Mostramos partículas de destrucción
         Instantiate(particles, transform.position, transform.rotation);
         if (particles.GetComponent<ParticleSystem>().isStopped)
                     particles.GetComponent<ParticleSystem>().Play();
-        
-        audiosource.clip = soundDestroyed;
-        audiosource.Play();
     }
 
     public abstract bool isLegalMove(GameObject square = null, bool hasEnemy = false);

@@ -45,7 +45,7 @@ public class Manager : MonoBehaviour
         ended = false;
 
         //Reconocedor de movimientos
-        m_Keywords = new string[65];
+        m_Keywords = new string[68];
         GameObject board = GameObject.Find("Tablero");
         int k = 0;
 
@@ -57,6 +57,9 @@ public class Manager : MonoBehaviour
             }
         }
         m_Keywords[64] = "Cancelar";
+        m_Keywords[65] = "Salir";
+        m_Keywords[66] = "Continuar";
+        m_Keywords[67] = "Pausa";
 
         m_Recognizer = new KeywordRecognizer(m_Keywords);
         m_Recognizer.OnPhraseRecognized += OnPhraseRecognized;

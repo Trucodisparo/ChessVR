@@ -77,6 +77,8 @@ public class Manager : MonoBehaviour
         exitButton.GetComponent<Button>().onClick.AddListener(exitGame); //Salimos si clickamos el botón
 
         turn = "Black";
+
+        Destroy(settingsManager); //Eliminamos tras cargar la config, si lo hacemos al salir de la escena no da tiempo a destruirlo antes del cambio
     }
 
     // Update is called once per frame
@@ -203,10 +205,13 @@ public class Manager : MonoBehaviour
         audioPlayer.Play();
 
         ended = true;
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     private void exitGame(){
-        Destroy(settingsManager);
+        settingsManager = null;
         Destroy(GameObject.Find("BGMusicPlayer"));
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -218,7 +223,6 @@ public class Manager : MonoBehaviour
         while(PhotonNetwork.IsConnected)
             yield return null;
         Debug.Log("Disconnected from Photon");
-        Destroy(GameObject.Find("SettingsManager"));
         SceneManager.LoadScene(0);
     }
 
